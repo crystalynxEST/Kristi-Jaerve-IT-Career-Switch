@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Step 3 Task</title>
+    <link rel="stylesheet" type="text/css" href="libs/css/style.css" />
+    <meta name="description" content="API Geo Names Task" />
+    <meta name="author" content="Kristi Jaerve" />
+  </head>
+
+  <body>
+    <table>
+      <tr>
+        <th class="table-header">API name</th>
+        <th class="table-header">API description</th>
+        <th class="table-header"></th>
+      </tr>
+
+      <!-- Weather Row -->
+      <tr class="table-row">
+        <td class="column-1">Weather Search</td>
+        <td class="column-2">
+          <p>
+            Please enter the coordinates below. Returns a list of weather
+            stations with the most recent weather observation.
+          </p>
+          <form>
+            <label for="north">North:</label>
+            <input
+              type="number"
+              id="north"
+              name="north"
+              placeholder="North"
+              required
+            />
+            <label for="south">South:</label>
+            <input
+              type="number"
+              id="south"
+              name="south"
+              placeholder="South"
+              required
+            />
+            <label for="east">East:</label>
+            <input
+              type="number"
+              id="east"
+              name="east"
+              placeholder="East"
+              required
+            />
+            <label for="west">West:</label>
+            <input
+              type="number"
+              id="west"
+              name="west"
+              placeholder="West"
+              required
+            />
+            <p class="example" >Example of details to enter above: North = 44.1, South = -9.9, East = -22.4, West = 55.2. </p>
+          </form>
+        </td>
+        <td class="column-3">
+          <button id="btnSubmitWeather">Submit</button>
+        </td>
+      </tr>
+      <tr class="table-row">
+        <td colspan="3" id="weatherErrorMessage"></td>
+      </tr>
+      <!-- Postal Code Row -->
+      <tr class="table-row">
+        <td class="column-1">Postal Code</td>
+        <td class="column-2">
+          <p>
+            A list of postal codes and places for the placename/postal code
+            query as xml document. For the US, the first returned zip code is
+            determined using zip code area shapes, the following zip codes are
+            based on the centroid. For all other supported countries all
+            returned postal codes are based on centroids.
+          </p>
+          <p class="example">Example of details to enter above: Post code (without any added spaces) = PR13NN. </p>
+          <form>
+            <input
+              type="text"
+              id="postalCode"
+              placeholder="Post Code without space"/>
+          </form>
+        </td>
+        <td class="column-3">
+          <button id="btnSubmitPostal">Submit</button>
+        </td>
+      </tr>
+      <tr class="table-row">
+        <td colspan="3" id="postalCodeErrorMessage"></td>
+      </tr>
+
+      <!-- Time Zone Row -->
+      <tr class="table-row">
+        <td class="column-1">Time Zone</td>
+
+        <td class="column-2">
+          <p>
+            Receive Time Zone information (including the GMT offset and DST
+            offset). Please enter the desired longitude and latitude for the
+            desired location.
+          </p>
+          <form>
+            <input type="text" name="lat" placeholder="Latitude" />
+            <input type="text" name="lng" placeholder="Longitude" />
+          </form>
+          <p class="example">Example of details to enter above: Latitude = 20, Longitude = 5. </p>
+        </td>
+        <td class="column-3">
+          <button id="btnSubmitTimeZone">Submit</button>
+        </td>
+      </tr>
+
+      <tr class="table-row">
+        <td colspan="3" id="timezoneErrorMessage"></td>
+      </tr>
+      <!-- ------------------------------------------------------------------- WEATHER RESULTS-->
+      <div id="divResultsWeather">
+        <tr class="table-row" id="results">
+          <td class="column-3" colspan="3">
+            <h3>Weather Search Results:</h3>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="resultText">Latitude:</td>
+          <td id="latWeather"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Longitude:</td>
+          <td id="lngWeather"></td>
+        </tr>
+
+        <tr>
+          <td class="resultText">Observation:</td>
+          <td id="observation"></td>
+        </tr>
+        <tr>
+          <td class="resultText">ICAO:</td>
+          <td id="ICAO"></td>
+        </tr>
+
+        <tr>
+          <td class="resultText">Clouds:</td>
+          <td id="clouds"></td>
+        </tr>
+
+        <tr>
+          <td class="resultText">Dew Point:</td>
+          <td id="dewPoint"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Date & Time:</td>
+          <td id="datetime"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Temperature:</td>
+          <td id="temperature"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Humidity:</td>
+          <td id="humidity"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Station Name:</td>
+          <td id="stationName"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Weather Condition:</td>
+          <td id="weatherCondition"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Wind Direction:</td>
+          <td id="windDirection"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Wind Speed:</td>
+          <td id="windSpeed"></td>
+        </tr>
+      </div>
+
+      <!-- ------------------------------------------------------------------- POSTAL CODE RESULTS-->
+      <div id="divResultsPostCode">
+        <tr class="table-row" id="results">
+          <td class="column-3" colspan="3">
+            <h3>Postal Code Search Results:</h3>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="resultText">District :</td>
+          <td id="adminName3"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Longitude:</td>
+          <td id="lngPostCode"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Latitude:</td>
+          <td id="latPostCode"></td>
+        </tr>
+
+        <tr>
+          <td class="resultText">County:</td>
+          <td id="adminName2"></td>
+        </tr>
+
+        <tr>
+          <td class="resultText">Country Code:</td>
+          <td id="countryCode"></td>
+        </tr>
+
+        <tr>
+          <td class="resultText">Post Code:</td>
+          <td id="postalCodeOther"></td>
+        </tr>
+
+        <tr>
+          <td class="resultText">Country:</td>
+          <td id="adminName1"></td>
+        </tr>
+
+        <tr>
+          <td class="resultText">Name of the Area:</td>
+          <td id="placeName"></td>
+        </tr>
+      </div>
+      <!-- -------------------------------------------------------------------TIME ZONE RESULTS-->
+      <div id="divResultsTime">
+        <tr class="table-row" id="results">
+          <td class="column-3" colspan="3">
+            <h3>Time Zone Results:</h3>
+          </td>
+        </tr>
+        <tr>
+        <td class="resultText">Country Code:</td>
+        <td id="countryCodeTime"></td>
+    </tr>
+        <tr>
+          <td class="resultText">Country Name:</td>
+          <td id="countryName"></td>
+        </tr>
+
+        <tr>
+          <td class="resultText">Latitude:</td>
+          <td id="lat"></td>
+        </tr>
+
+        <tr>
+          <td class="resultText">Longitude:</td>
+          <td id="lng"></td>
+        </tr>
+
+        <tr>
+          <td class="resultText">Time Zone:</td>
+          <td id="timezoneId"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Daylight Savings Time:</td>
+          <td id="dstOffset"></td>
+        </tr>
+        <tr>
+          <td class="resultText">GMT Offset Time:</td>
+          <td id="gmtOffset"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Given Time Zone GMT Offset in ms:</td>
+          <td id="rawOffset"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Time:</td>
+          <td id="time"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Sunrise:</td>
+          <td id="sunrise"></td>
+        </tr>
+        <tr>
+          <td class="resultText">Sunset:</td>
+          <td id="sunset"></td>
+        </tr>
+      </div>
+    </table>
+
+    <script type="application/javascript" src="libs/js/jquery-3.7.1.min.js"></script>
+    <script type="application/javascript" src="libs/js/script.js"></script>
+  </body>
+</html>

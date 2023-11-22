@@ -1,0 +1,1916 @@
+[
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Bahamas",
+                "iso_a2": "BS",
+                "iso_a3": "BHS",
+                "iso_n3": "044"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Canada",
+                "iso_a2": "CA",
+                "iso_a3": "CAN",
+                "iso_n3": "124"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Costa Rica",
+                "iso_a2": "CR",
+                "iso_a3": "CRI",
+                "iso_n3": "188"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Cuba",
+                "iso_a2": "CU",
+                "iso_a3": "CUB",
+                "iso_n3": "192"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Greenland",
+                "iso_a2": "GL",
+                "iso_a3": "GRL",
+                "iso_n3": "304"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Guatemala",
+                "iso_a2": "GT",
+                "iso_a3": "GTM",
+                "iso_n3": "320"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Dominican Rep.",
+                "iso_a2": "DO",
+                "iso_a3": "DOM",
+                "iso_n3": "214"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Haiti",
+                "iso_a2": "HT",
+                "iso_a3": "HTI",
+                "iso_n3": "332"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Mexico",
+                "iso_a2": "MX",
+                "iso_a3": "MEX",
+                "iso_n3": "484"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Nicaragua",
+                "iso_a2": "NI",
+                "iso_a3": "NIC",
+                "iso_n3": "558"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Belize",
+                "iso_a2": "BZ",
+                "iso_a3": "BLZ",
+                "iso_n3": "084"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Puerto Rico",
+                "iso_a2": "PR",
+                "iso_a3": "PRI",
+                "iso_n3": "630"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "El Salvador",
+                "iso_a2": "SV",
+                "iso_a3": "SLV",
+                "iso_n3": "222"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Trinidad and Tobago",
+                "iso_a2": "TT",
+                "iso_a3": "TTO",
+                "iso_n3": "780"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "United States",
+                "iso_a2": "US",
+                "iso_a3": "USA",
+                "iso_n3": "840"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Honduras",
+                "iso_a2": "HN",
+                "iso_a3": "HND",
+                "iso_n3": "340"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Bolivia",
+                "iso_a2": "BO",
+                "iso_a3": "BOL",
+                "iso_n3": "068"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Brazil",
+                "iso_a2": "BR",
+                "iso_a3": "BRA",
+                "iso_n3": "076"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Chile",
+                "iso_a2": "CL",
+                "iso_a3": "CHL",
+                "iso_n3": "152"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Panama",
+                "iso_a2": "PA",
+                "iso_a3": "PAN",
+                "iso_n3": "591"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Ecuador",
+                "iso_a2": "EC",
+                "iso_a3": "ECU",
+                "iso_n3": "218"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Guyana",
+                "iso_a2": "GY",
+                "iso_a3": "GUY",
+                "iso_n3": "328"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Paraguay",
+                "iso_a2": "PY",
+                "iso_a3": "PRY",
+                "iso_n3": "600"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Suriname",
+                "iso_a2": "SR",
+                "iso_a3": "SUR",
+                "iso_n3": "740"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Uruguay",
+                "iso_a2": "UY",
+                "iso_a3": "URY",
+                "iso_n3": "858"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Jamaica",
+                "iso_a2": "JM",
+                "iso_a3": "JAM",
+                "iso_n3": "388"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Venezuela",
+                "iso_a2": "VE",
+                "iso_a3": "VEN",
+                "iso_n3": "862"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Afghanistan",
+                "iso_a2": "AF",
+                "iso_a3": "AFG",
+                "iso_n3": "004"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "United Arab Emirates",
+                "iso_a2": "AE",
+                "iso_a3": "ARE",
+                "iso_n3": "784"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Azerbaijan",
+                "iso_a2": "AZ",
+                "iso_a3": "AZE",
+                "iso_n3": "031"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Brunei",
+                "iso_a2": "BN",
+                "iso_a3": "BRN",
+                "iso_n3": "096"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "N. Cyprus",
+                "iso_a2": "-99",
+                "iso_a3": "-99",
+                "iso_n3": "-99"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Cyprus",
+                "iso_a2": "CY",
+                "iso_a3": "CYP",
+                "iso_n3": "196"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Colombia",
+                "iso_a2": "CO",
+                "iso_a3": "COL",
+                "iso_n3": "170"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Falkland Is.",
+                "iso_a2": "FK",
+                "iso_a3": "FLK",
+                "iso_n3": "238"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Argentina",
+                "iso_a2": "AR",
+                "iso_a3": "ARG",
+                "iso_n3": "032"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Georgia",
+                "iso_a2": "GE",
+                "iso_a3": "GEO",
+                "iso_n3": "268"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Indonesia",
+                "iso_a2": "ID",
+                "iso_a3": "IDN",
+                "iso_n3": "360"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Armenia",
+                "iso_a2": "AM",
+                "iso_a3": "ARM",
+                "iso_n3": "051"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Iraq",
+                "iso_a2": "IQ",
+                "iso_a3": "IRQ",
+                "iso_n3": "368"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Peru",
+                "iso_a2": "PE",
+                "iso_a3": "PER",
+                "iso_n3": "604"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Israel",
+                "iso_a2": "IL",
+                "iso_a3": "ISR",
+                "iso_n3": "376"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Bangladesh",
+                "iso_a2": "BD",
+                "iso_a3": "BGD",
+                "iso_n3": "050"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "China",
+                "iso_a2": "CN",
+                "iso_a3": "CHN",
+                "iso_n3": "156"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Jordan",
+                "iso_a2": "JO",
+                "iso_a3": "JOR",
+                "iso_n3": "400"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Bhutan",
+                "iso_a2": "BT",
+                "iso_a3": "BTN",
+                "iso_n3": "064"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Kazakhstan",
+                "iso_a2": "KZ",
+                "iso_a3": "KAZ",
+                "iso_n3": "398"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Kyrgyzstan",
+                "iso_a2": "KG",
+                "iso_a3": "KGZ",
+                "iso_n3": "417"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Cambodia",
+                "iso_a2": "KH",
+                "iso_a3": "KHM",
+                "iso_n3": "116"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Korea",
+                "iso_a2": "KR",
+                "iso_a3": "KOR",
+                "iso_n3": "410"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Lebanon",
+                "iso_a2": "LB",
+                "iso_a3": "LBN",
+                "iso_n3": "422"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Sri Lanka",
+                "iso_a2": "LK",
+                "iso_a3": "LKA",
+                "iso_n3": "144"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Mongolia",
+                "iso_a2": "MN",
+                "iso_a3": "MNG",
+                "iso_n3": "496"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Nepal",
+                "iso_a2": "NP",
+                "iso_a3": "NPL",
+                "iso_n3": "524"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Oman",
+                "iso_a2": "OM",
+                "iso_a3": "OMN",
+                "iso_n3": "512"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Pakistan",
+                "iso_a2": "PK",
+                "iso_a3": "PAK",
+                "iso_n3": "586"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Iran",
+                "iso_a2": "IR",
+                "iso_a3": "IRN",
+                "iso_n3": "364"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Dem. Rep. Korea",
+                "iso_a2": "KP",
+                "iso_a3": "PRK",
+                "iso_n3": "408"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "India",
+                "iso_a2": "IN",
+                "iso_a3": "IND",
+                "iso_n3": "356"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Qatar",
+                "iso_a2": "QA",
+                "iso_a3": "QAT",
+                "iso_n3": "634"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Saudi Arabia",
+                "iso_a2": "SA",
+                "iso_a3": "SAU",
+                "iso_n3": "682"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Syria",
+                "iso_a2": "SY",
+                "iso_a3": "SYR",
+                "iso_n3": "760"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Kuwait",
+                "iso_a2": "KW",
+                "iso_a3": "KWT",
+                "iso_n3": "414"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Tajikistan",
+                "iso_a2": "TJ",
+                "iso_a3": "TJK",
+                "iso_n3": "762"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Lao PDR",
+                "iso_a2": "LA",
+                "iso_a3": "LAO",
+                "iso_n3": "418"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Japan",
+                "iso_a2": "JP",
+                "iso_a3": "JPN",
+                "iso_n3": "392"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Myanmar",
+                "iso_a2": "MM",
+                "iso_a3": "MMR",
+                "iso_n3": "104"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Turkmenistan",
+                "iso_a2": "TM",
+                "iso_a3": "TKM",
+                "iso_n3": "795"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Malaysia",
+                "iso_a2": "MY",
+                "iso_a3": "MYS",
+                "iso_n3": "458"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Timor-Leste",
+                "iso_a2": "TL",
+                "iso_a3": "TLS",
+                "iso_n3": "626"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Philippines",
+                "iso_a2": "PH",
+                "iso_a3": "PHL",
+                "iso_n3": "608"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Taiwan",
+                "iso_a2": "TW",
+                "iso_a3": "TWN",
+                "iso_n3": "158"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Uzbekistan",
+                "iso_a2": "UZ",
+                "iso_a3": "UZB",
+                "iso_n3": "860"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Palestine",
+                "iso_a2": "PS",
+                "iso_a3": "PSE",
+                "iso_n3": "275"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Yemen",
+                "iso_a2": "YE",
+                "iso_a3": "YEM",
+                "iso_n3": "887"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Burundi",
+                "iso_a2": "BI",
+                "iso_a3": "BDI",
+                "iso_n3": "108"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Benin",
+                "iso_a2": "BJ",
+                "iso_a3": "BEN",
+                "iso_n3": "204"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Botswana",
+                "iso_a2": "BW",
+                "iso_a3": "BWA",
+                "iso_n3": "072"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Central African Rep.",
+                "iso_a2": "CF",
+                "iso_a3": "CAF",
+                "iso_n3": "140"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Cameroon",
+                "iso_a2": "CM",
+                "iso_a3": "CMR",
+                "iso_n3": "120"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Dem. Rep. Congo",
+                "iso_a2": "CD",
+                "iso_a3": "COD",
+                "iso_n3": "180"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Algeria",
+                "iso_a2": "DZ",
+                "iso_a3": "DZA",
+                "iso_n3": "012"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Thailand",
+                "iso_a2": "TH",
+                "iso_a3": "THA",
+                "iso_n3": "764"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Vietnam",
+                "iso_a2": "VN",
+                "iso_a3": "VNM",
+                "iso_n3": "704"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Eritrea",
+                "iso_a2": "ER",
+                "iso_a3": "ERI",
+                "iso_n3": "232"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Turkey",
+                "iso_a2": "TR",
+                "iso_a3": "TUR",
+                "iso_n3": "792"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Ethiopia",
+                "iso_a2": "ET",
+                "iso_a3": "ETH",
+                "iso_n3": "231"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Angola",
+                "iso_a2": "AO",
+                "iso_a3": "AGO",
+                "iso_n3": "024"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Guinea",
+                "iso_a2": "GN",
+                "iso_a3": "GIN",
+                "iso_n3": "324"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Gambia",
+                "iso_a2": "GM",
+                "iso_a3": "GMB",
+                "iso_n3": "270"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "C\u00f4te d'Ivoire",
+                "iso_a2": "CI",
+                "iso_a3": "CIV",
+                "iso_n3": "384"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Guinea-Bissau",
+                "iso_a2": "GW",
+                "iso_a3": "GNB",
+                "iso_n3": "624"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Liberia",
+                "iso_a2": "LR",
+                "iso_a3": "LBR",
+                "iso_n3": "430"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Congo",
+                "iso_a2": "CG",
+                "iso_a3": "COG",
+                "iso_n3": "178"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Djibouti",
+                "iso_a2": "DJ",
+                "iso_a3": "DJI",
+                "iso_n3": "262"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Lesotho",
+                "iso_a2": "LS",
+                "iso_a3": "LSO",
+                "iso_n3": "426"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Libya",
+                "iso_a2": "LY",
+                "iso_a3": "LBY",
+                "iso_n3": "434"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Morocco",
+                "iso_a2": "MA",
+                "iso_a3": "MAR",
+                "iso_n3": "504"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Burkina Faso",
+                "iso_a2": "BF",
+                "iso_a3": "BFA",
+                "iso_n3": "854"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Egypt",
+                "iso_a2": "EG",
+                "iso_a3": "EGY",
+                "iso_n3": "818"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Mozambique",
+                "iso_a2": "MZ",
+                "iso_a3": "MOZ",
+                "iso_n3": "508"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Mauritania",
+                "iso_a2": "MR",
+                "iso_a3": "MRT",
+                "iso_n3": "478"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Malawi",
+                "iso_a2": "MW",
+                "iso_a3": "MWI",
+                "iso_n3": "454"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Namibia",
+                "iso_a2": "NA",
+                "iso_a3": "NAM",
+                "iso_n3": "516"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Niger",
+                "iso_a2": "NE",
+                "iso_a3": "NER",
+                "iso_n3": "562"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Sudan",
+                "iso_a2": "SD",
+                "iso_a3": "SDN",
+                "iso_n3": "729"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "W. Sahara",
+                "iso_a2": "EH",
+                "iso_a3": "ESH",
+                "iso_n3": "732"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Ghana",
+                "iso_a2": "GH",
+                "iso_a3": "GHA",
+                "iso_n3": "288"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Gabon",
+                "iso_a2": "GA",
+                "iso_a3": "GAB",
+                "iso_n3": "266"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "S. Sudan",
+                "iso_a2": "SS",
+                "iso_a3": "SSD",
+                "iso_n3": "728"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Senegal",
+                "iso_a2": "SN",
+                "iso_a3": "SEN",
+                "iso_n3": "686"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Eq. Guinea",
+                "iso_a2": "GQ",
+                "iso_a3": "GNQ",
+                "iso_n3": "226"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Somalia",
+                "iso_a2": "SO",
+                "iso_a3": "SOM",
+                "iso_n3": "706"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Mali",
+                "iso_a2": "ML",
+                "iso_a3": "MLI",
+                "iso_n3": "466"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Swaziland",
+                "iso_a2": "SZ",
+                "iso_a3": "SWZ",
+                "iso_n3": "748"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Kenya",
+                "iso_a2": "KE",
+                "iso_a3": "KEN",
+                "iso_n3": "404"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Madagascar",
+                "iso_a2": "MG",
+                "iso_a3": "MDG",
+                "iso_n3": "450"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Togo",
+                "iso_a2": "TG",
+                "iso_a3": "TGO",
+                "iso_n3": "768"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Tanzania",
+                "iso_a2": "TZ",
+                "iso_a3": "TZA",
+                "iso_n3": "834"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "South Africa",
+                "iso_a2": "ZA",
+                "iso_a3": "ZAF",
+                "iso_n3": "710"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Zambia",
+                "iso_a2": "ZM",
+                "iso_a3": "ZMB",
+                "iso_n3": "894"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Zimbabwe",
+                "iso_a2": "ZW",
+                "iso_a3": "ZWE",
+                "iso_n3": "716"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Nigeria",
+                "iso_a2": "NG",
+                "iso_a3": "NGA",
+                "iso_n3": "566"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Albania",
+                "iso_a2": "AL",
+                "iso_a3": "ALB",
+                "iso_n3": "008"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Austria",
+                "iso_a2": "AT",
+                "iso_a3": "AUT",
+                "iso_n3": "040"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Rwanda",
+                "iso_a2": "RW",
+                "iso_a3": "RWA",
+                "iso_n3": "646"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Belgium",
+                "iso_a2": "BE",
+                "iso_a3": "BEL",
+                "iso_n3": "056"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Somaliland",
+                "iso_a2": "-99",
+                "iso_a3": "-99",
+                "iso_n3": "-99"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Belarus",
+                "iso_a2": "BY",
+                "iso_a3": "BLR",
+                "iso_n3": "112"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Switzerland",
+                "iso_a2": "CH",
+                "iso_a3": "CHE",
+                "iso_n3": "756"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Chad",
+                "iso_a2": "TD",
+                "iso_a3": "TCD",
+                "iso_n3": "148"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Tunisia",
+                "iso_a2": "TN",
+                "iso_a3": "TUN",
+                "iso_n3": "788"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Sierra Leone",
+                "iso_a2": "SL",
+                "iso_a3": "SLE",
+                "iso_n3": "694"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Czech Rep.",
+                "iso_a2": "CZ",
+                "iso_a3": "CZE",
+                "iso_n3": "203"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Germany",
+                "iso_a2": "DE",
+                "iso_a3": "DEU",
+                "iso_n3": "276"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Estonia",
+                "iso_a2": "EE",
+                "iso_a3": "EST",
+                "iso_n3": "233"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Finland",
+                "iso_a2": "FI",
+                "iso_a3": "FIN",
+                "iso_n3": "246"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "France",
+                "iso_a2": "FR",
+                "iso_a3": "FRA",
+                "iso_n3": "250"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Uganda",
+                "iso_a2": "UG",
+                "iso_a3": "UGA",
+                "iso_n3": "800"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Greece",
+                "iso_a2": "GR",
+                "iso_a3": "GRC",
+                "iso_n3": "300"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Croatia",
+                "iso_a2": "HR",
+                "iso_a3": "HRV",
+                "iso_n3": "191"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Ireland",
+                "iso_a2": "IE",
+                "iso_a3": "IRL",
+                "iso_n3": "372"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Bosnia and Herz.",
+                "iso_a2": "BA",
+                "iso_a3": "BIH",
+                "iso_n3": "070"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Italy",
+                "iso_a2": "IT",
+                "iso_a3": "ITA",
+                "iso_n3": "380"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Bulgaria",
+                "iso_a2": "BG",
+                "iso_a3": "BGR",
+                "iso_n3": "100"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "United Kingdom",
+                "iso_a2": "GB",
+                "iso_a3": "GBR",
+                "iso_n3": "826"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Lithuania",
+                "iso_a2": "LT",
+                "iso_a3": "LTU",
+                "iso_n3": "440"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Luxembourg",
+                "iso_a2": "LU",
+                "iso_a3": "LUX",
+                "iso_n3": "442"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Latvia",
+                "iso_a2": "LV",
+                "iso_a3": "LVA",
+                "iso_n3": "428"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Denmark",
+                "iso_a2": "DK",
+                "iso_a3": "DNK",
+                "iso_n3": "208"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Moldova",
+                "iso_a2": "MD",
+                "iso_a3": "MDA",
+                "iso_n3": "498"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Montenegro",
+                "iso_a2": "ME",
+                "iso_a3": "MNE",
+                "iso_n3": "499"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Netherlands",
+                "iso_a2": "NL",
+                "iso_a3": "NLD",
+                "iso_n3": "528"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Norway",
+                "iso_a2": "NO",
+                "iso_a3": "NOR",
+                "iso_n3": "578"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Poland",
+                "iso_a2": "PL",
+                "iso_a3": "POL",
+                "iso_n3": "616"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Spain",
+                "iso_a2": "ES",
+                "iso_a3": "ESP",
+                "iso_n3": "724"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Russia",
+                "iso_a2": "RU",
+                "iso_a3": "RUS",
+                "iso_n3": "643"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Hungary",
+                "iso_a2": "HU",
+                "iso_a3": "HUN",
+                "iso_n3": "348"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Slovakia",
+                "iso_a2": "SK",
+                "iso_a3": "SVK",
+                "iso_n3": "703"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Slovenia",
+                "iso_a2": "SI",
+                "iso_a3": "SVN",
+                "iso_n3": "705"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Sweden",
+                "iso_a2": "SE",
+                "iso_a3": "SWE",
+                "iso_n3": "752"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Iceland",
+                "iso_a2": "IS",
+                "iso_a3": "ISL",
+                "iso_n3": "352"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Australia",
+                "iso_a2": "AU",
+                "iso_a3": "AUS",
+                "iso_n3": "036"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Macedonia",
+                "iso_a2": "MK",
+                "iso_a3": "MKD",
+                "iso_n3": "807"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Romania",
+                "iso_a2": "RO",
+                "iso_a3": "ROU",
+                "iso_n3": "642"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Portugal",
+                "iso_a2": "PT",
+                "iso_a3": "PRT",
+                "iso_n3": "620"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Serbia",
+                "iso_a2": "RS",
+                "iso_a3": "SRB",
+                "iso_n3": "688"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "New Caledonia",
+                "iso_a2": "NC",
+                "iso_a3": "NCL",
+                "iso_n3": "540"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Ukraine",
+                "iso_a2": "UA",
+                "iso_a3": "UKR",
+                "iso_n3": "804"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Papua New Guinea",
+                "iso_a2": "PG",
+                "iso_a3": "PNG",
+                "iso_n3": "598"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Fiji",
+                "iso_a2": "FJ",
+                "iso_a3": "FJI",
+                "iso_n3": "242"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "New Zealand",
+                "iso_a2": "NZ",
+                "iso_a3": "NZL",
+                "iso_n3": "554"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Solomon Is.",
+                "iso_a2": "SB",
+                "iso_a3": "SLB",
+                "iso_n3": "090"
+            }
+        ]
+    },
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "name": "Vanuatu",
+                "iso_a2": "VU",
+                "iso_a3": "VUT",
+                "iso_n3": "548"
+            }
+        ]
+    }
+]

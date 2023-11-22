@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Gazetteer</title>
+
+        <link rel="stylesheet" href="resources/bootstrap-5.3.2-dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="resources/bootstrap-5.3.2-dist/css/bootstrap-utilities.min.css" />
+        <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="resources/leaflet/leaflet.css" />
+        <link rel="stylesheet" href="resources/Leaflet.markercluster-1.4.1/dist/MarkerCluster.css" />
+        <link rel="stylesheet" href="resources/Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+        <link rel="stylesheet" href="resources/Leaflet.EasyButton-master/src/easy-button.css" />
+        <link rel="stylesheet" href="css/fontawesome-free-6.4.2-web/css/all.min.css" />
+    </head>
+
+    <body class="mt-0 pt-0">
+
+        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-secondary bg-gradient border-bottom"> 
+            <div class="container-fluid">
+                <a class="navbar-brand text-white p-2" href="#">Gazetteer</a>
+                <div class="mx-auto">
+                    <select id="countrySelect">
+                        <!-- More dynamic options -->
+                    </select>
+                </div>
+                <div>
+                    <a class="navbar-brand text-black" id="informationButton">
+                        <i class="fas fa-question-circle text-light"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <main class="container-fluid">
+            <!-- Loader Container -->
+            <div id="loader-container" class="loader-container">
+                <!-- Bootstrap Spinner -->
+                <div class="mx-auto">
+                    <div class="spinner-grow text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="map-container">
+                <div id="map"></div>
+            </div>
+            <!-- Demographics Modal -->
+            <div class="modal fade" id="demographicsModal" tabindex="-1" role="dialog"
+                aria-labelledby="demographicsModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="demographicsModalLabel">Demographics Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                        </div>
+                        <div class="modal-body" id="modalBody">
+                            <table class="table table-striped">
+                                <tbody><tr>
+                                    <td>Name</td>
+                                    <td id="countryName"></td>
+                                </tr>        
+                                <tr>
+                                    <td>Capital City</td>
+                                    <td id="countryCapital"></td>
+                                </tr>        
+                                <tr>
+                                    <td>Population</td>
+                                    <td id="countryPopulation"></td>
+                                </tr>        
+                                <tr>
+                                    <td>Continent</td>
+                                    <td id="countryContinent"></td>
+                                </tr>        
+                                <tr>
+                                    <td>Flag</td>
+                                    <td id="countryFlag"></td>
+                                </tr>        
+                            </tbody></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Exchange Rate Modal -->
+            <div class="modal fade" id="exchangeRateModal" tabindex="-1" role="dialog"
+                aria-labelledby="exchangeRateModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exchangeModalLabel">Exchange Rate Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="exchangeRateModalBody">
+                            <table class="table table-striped">
+                                <tbody><tr>
+                                    <td> Country Name</td>
+                                    <td id="modalCountryName"></td>
+                                </tr>        
+                                <tr>
+                                    <td>Current Currency Code</td>
+                                    <td id="modalCurrentCurrencyCode"></td>
+                                </tr>        
+                                <tr>
+                                    <td>Current Exchange Rate</td>
+                                    <td id="modalCurrentExchangeRate"></td>
+                                </tr>        
+                                <tr>
+                                    <td>Exchange Rate to GBP (British Pound)</td>
+                                    <td id="modalToExchangeRate"></td>
+                                </tr>              
+                            </tbody></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- News Modal -->
+            <div class="modal fade" id="newsModal" tabindex="-1" role="dialog" aria-labelledby="newsModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="newsModalLabel">News Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="newsModalBody">
+                            <!-- Article 1 -->
+                            <div class="mb-3" id="article1">
+                                <h6 class="mb-2" id="article1Title"><strong></strong></h6>
+                                <p class="text-muted" id="article1Description"></p><br>
+                            </div>
+                            <!-- Article 2 -->
+                            <div class="mb-3" id="article2">
+                                <h6 class="mb-2" id="article2Title"><strong></strong></h6>
+                                <p class="text-muted" id="article2Description"></p><br>
+                            </div>
+                            <!-- Article 3 -->
+                            <div class="mb-3" id="article3">
+                                <h6 class="mb-2" id="article3Title"><strong></strong></h6>
+                                <p class="text-muted" id="article3Description"></p><br>
+                            </div>
+                            <!-- Article 4 -->
+                            <div class="mb-3" id="article4">
+                                <h6 class="mb-2" id="article4Title"><strong></strong></h6>
+                                <p class="text-muted" id="article4Description"></p><br>
+                            </div>
+                            <!-- Article 5 -->
+                            <div class="mb-3" id="article5">
+                                <h6 class="mb-2" id="article5Title"><strong></strong></h6>
+                                <p class="text-muted" id="article5Description"></p><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wikimedia Modal -->
+            <div class="modal fade" id="wikimediaModal" tabindex="-1" role="dialog" aria-labelledby="wikimediaModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="wikimediaModalLabel">Wikimedia Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="wikimediaModalBody">
+                            <!-- Article 1 -->
+                            <div class="mb-3" id="wikimediaArticle1">
+                                <p><strong id="wikimediaArticle1Title"></strong></p>
+                                <p class="text-muted" id="wikimediaArticle1Summary"></p><br>
+                                <p>Source: <a href="" target="_new" id="wikimediaArticle1Url"></a></p>
+                            </div>
+                            <!-- Article 2 -->
+                            <div class="mb-3" id="wikimediaArticle2">
+                                <p><strong id="wikimediaArticle2Title"></strong></p>
+                                <p class="text-muted" id="wikimediaArticle2Summary"></p><br>
+                                <p>Source: <a href="" target="_new" id="wikimediaArticle2Url"></a></p>
+                            </div>
+                            <!-- Article 3 -->
+                            <div class="mb-3" id="wikimediaArticle3">
+                                <p><strong id="wikimediaArticle3Title"></strong></p>
+                                <p class="text-muted" id="wikimediaArticle3Summary"></p><br>
+                                <p>Source: <a href="" target="_new" id="wikimediaArticle3Url"></a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Weather Modal -->
+            <div class="modal fade" id="weatherModal" tabindex="-1" role="dialog" aria-labelledby="weatherModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="weatherModalLabel">Weather Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="newsModalBody">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Location</strong></td>
+                                        <td id="weatherPlaceName"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Temperature (Celsius)</strong></td>
+                                        <td id="weatherTemperatureCelsius"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Temperature (Fahrenheit)</strong></td>
+                                        <td id="weatherTemperatureFahrenheit"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Description</strong></td>
+                                        <td id="weatherDescription"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Wind Speed</strong></td>
+                                        <td id="weatherWindSpeed"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Humidity</strong></td>
+                                        <td id="weatherHumidity"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="informationModal" tabindex="-1" role="dialog" aria-labelledby="informationModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="informationModalLabel">Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="informationModalBody">
+                            <h2>How to Use the Map:</h2>
+
+                            <p><strong>1. Country Selection:</strong> Choose a county by clicking on the country select drop-down menu.</p>
+                            
+                            <p><strong>2. Exploring Locations:</strong> Double click/tap anywhere on the map to select that country and receive it's information.</p>
+                            <br>
+                            
+                            <h4>Right Side Buttons:</h4>
+                            
+                            <ul>
+                                <li>
+                                    <strong>Magnifying Glass Icon:</strong> Search for any location on the map by clicking on the icon, then enter its address, postcode, or name.
+                                </li>
+                                <li>
+                                    <strong>Layers Icon:</strong>
+                                    <ul>
+                                        <li>Adjust the map layout by selecting different visual options.</li>
+                                        <li>Modify the markers displayed in the selected country area by toggling the desired markers.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <br>
+                            
+                            <h4>Left Side Buttons:</h4>
+                            
+                            <ul>
+                                <li><strong>Zoom In/Out:</strong> Use the "+" and "-" buttons to zoom in or out.</li>
+                                <li><strong>Globe Icon:</strong> Explore the demographics of the selected country.</li>
+                                <li><strong>News Button:</strong> Access available news for the country. (The button is hidden if no news is available.)</li>
+                                <li><strong>"W" Icon:</strong> Retrieve Wikipedia information about the selected country.</li>
+                                <li><strong>Arrows Button:</strong> View currency exchange information.</li>
+                                <li><strong>Sun Icon:</strong> Access detailed weather information.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+        
+        <footer class="container-fluid text-center bg-dark p-3 fixed-bottom">
+            <div class="container text-light">
+                <p>
+                    Maps provided by: ©
+                    <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, © <a href="https://opentopomap.org">OpenTopoMap</a>, and ©
+                    <a href="https://www.google.com/permissions/geoguidelines/attr-guide.html">Google Maps</a>.
+                </p>
+            </div>
+        </footer>
+
+        <script src="javascript/jquery-3.7.1.min.js"></script>
+        <script src="resources/leaflet/leaflet.js"></script>
+        <script src="resources/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
+        <script src="resources/Leaflet.EasyButton-master/src/easy-button.js"></script>
+        <script src="node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+        <script src="resources/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+        <script src="javascript/main.js"></script>
+    </body>
+
+</html>

@@ -1,0 +1,151 @@
+/* Bootstrap classes for styling */
+
+/* Leaflet map container */
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+  --bs-gutter-x: 0rem;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * .5);
+  padding-left: calc(var(--bs-gutter-x) * .5);
+  margin-right: auto;
+  margin-left: auto;
+}
+#map-container {
+  height: calc(100vh - 56px);
+  margin-top: 56px !important;
+  padding: 0;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+.bg-light {
+  --bs-bg-opacity: 50%;
+}
+
+.p-3 {
+  padding: 0.2rem!important;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+/* Styles for Loader Container */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it's above other content */
+}
+
+/* Adjust the spinner styles as needed */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+.navbar-brand-gazetteer {
+  padding-left: 20px; /* Adjust the padding as needed */
+}
+/* Leaflet marker clusters styling */
+.marker-cluster-small {
+  background-color: rgba(181, 226, 140, 0.7); /* Customize cluster color */
+}
+
+.marker-cluster-medium {
+  background-color: rgba(241, 211, 87, 0.7); /* Customize cluster color */
+}
+
+.marker-cluster-large {
+  background-color: rgba(253, 156, 115, 0.7); /* Customize cluster color */
+}
+
+/* Leaflet default marker icon styling */
+.a leaflet-marker-icon {
+  width: 25px; /* Adjust marker width */
+  height: 41px; /* Adjust marker height */
+  margin-left: -12px; /* Center the marker horizontally */
+  margin-top: -41px; /* Center the marker vertically */
+  background-image: url('../resources/leaflet/images/marker-icon.png'); /* Use your custom marker image */
+  background-size: contain; /* Ensure the marker image fits within the specified width and height */
+  background-repeat: no-repeat; /* Prevent the marker image from repeating */
+  cursor: pointer; /* Set cursor to pointer on hover */
+}
+
+
+/* Leaflet popup styling */
+.leaflet-popup-content-wrapper {
+  padding: 10px;
+}
+
+.leaflet-popup-content {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Leaflet tooltip styling */
+.leaflet-tooltip {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  color: #333;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(125, 11, 11, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+/* easy button css */
+/* Center the demographicsBtn icon */
+.fa-globe::before {
+  line-height: 1.5;
+}
+
+.fa-newspaper:before {
+  line-height: 1.5;
+}
+
+.fa-wikipedia-w:before {
+  line-height: 1.5;
+}
+
+.fa-exchange-alt:before {
+  line-height: 1.5;
+}
+
+.fa-sun:before {
+  line-height: 1.5;
+}
+
+
+.leaflet-touch .leaflet-bar a {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.icon-container {
+  background-color: white;
+  padding: 5px; 
+  border-radius: 5px;  
+  box-shadow: 0 0 5px rgba(13, 189, 48, 0.3); 
+}
+.overlay-close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+.leaflet-control-container { 
+  position: relative; 
+  z-index: 1000; 
+}
