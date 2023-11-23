@@ -3,17 +3,41 @@
 include './config.php';
 include './functions.php';
 
-// Generate query string to append to the API URL
-$queryString = http_build_query([
-    'app_id' => EXCHANGE_RATE_APP_ID
-]);
 
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
-$executionStartTime = microtime(true);
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
 
-$url='https://openexchangerates.org/api/latest.json?'. $queryString;
+    switch($action) {
+        case 'currencyRate':
+            // Generate query string to append to the API URL
+            $queryString = http_build_query([
+                'app_id' => EXCHANGE_RATE_APP_ID
+            ]);
+            
+            $url='https://openexchangerates.org/api/latest.json?'. $queryString;
+            break;
+
+        case 'currencyName':
+            $queryString = http_build_query([
+                'show_alternative' => 1
+            ]);
+            
+            $url='https://openexchangerates.org/api/currencies.json?'. $queryString;
+            break;
+        default:
+            handleErrors(400, 'Invalid action specified');
+        break;
+    }
+} else {
+    // If no action parameter is provided, return an error
+handleErrors(400, 'Invalid action specified');
+}
+
+
+$executionStartTime = microtime(true);
 
 // Make a GET request to the specified URL
 $result = performCurlRequest($url);

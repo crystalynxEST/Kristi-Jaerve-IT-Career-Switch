@@ -16,7 +16,8 @@ var exchangeDataApiUrl = "./php/exchange-rate-api.php";
 
 var currentLocation = {}; 
 var exchangeRates = {};
-var currentCountry;
+var currentCountry = {};
+var countryCurrencyNames = {};
 
 // Initialize the Leaflet map
 var map = L.map("map", {
@@ -151,7 +152,7 @@ var googleTerrain = L.tileLayer(
   }
 );
 
-var geocoder = L.Control.geocoder().addTo(map);
+// var geocoder = L.Control.geocoder().addTo(map);
 
 googleSat.addTo(map);
 
@@ -243,6 +244,7 @@ L.easyButton({
   ],
 }).addTo(map);
 
+
 /* ------------------------------------------- LOADER FUNCTIONS --------------------------------*/
 
 // Function to show the loader
@@ -277,25 +279,27 @@ $(document).ready(async() => {
 // Show loading screen
 showLoader();
 
-geocoder.on('markgeocode', async function (event) {
+// geocoder.on('markgeocode', async function (event) {
 
-  var coordinates = new L.LatLng(
-    event.geocode.center.lat,
-    event.geocode.center.lng
-  );
+//   var coordinates = new L.LatLng(
+//     event.geocode.center.lat,
+//     event.geocode.center.lng
+//   );
 
-  await updateMapUsingCoordinates(coordinates);
-});
+//   await updateMapUsingCoordinates(coordinates);
+
+//   // Display the country border for the user's location
+//   await updateMap(currentCountry.countryCode);
+// });
 
 /* --------------------------------------------- UPDATE MAP USING COORDINATES -----------------*/
 async function updateMapUsingCoordinates(coordinates) {
 
-  setupUserLocation(coordinates);
+  await setupUserLocation(coordinates);
 
   map.setView(coordinates, 6); // 6 is the zoom level
   await findUserCountry(coordinates);
-  countryCode = currentCountry.countryCode;
-
+  var countryCode = currentCountry.countryCode;
   await getGeonameDataFromCountry(countryCode);
   await getFeatureMarkers(currentCountry);
   await addFeatureMarkersToMap();
@@ -312,6 +316,9 @@ await $.ajax({
   type: "GET",
   data: { action: "getCountryList" },
   success: function (response) {
+
+    countryInfo = response;
+
     // Populate the country dropdown
     populateCountryDropdown(response);
   },
@@ -325,6 +332,20 @@ await $.ajax({
 getUserLocation();
 
 /* -------------------------------------- USER LOCATION -------------------------*/
+
+async function setupUserLocation(userLatLng) {
+
+  if (!map.hasLayer(L.tileLayer)) {
+    map.setView(userLatLng, 6); // 6 is the zoom level
+    L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
+      maxZoom: 20,
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    var userMarker = L.marker(userLatLng, { icon: homeIcon }).addTo(markerClusters);
+  }
+}
 function getUserLocation() {
   
   if ("geolocation" in navigator) {
@@ -336,19 +357,6 @@ function getUserLocation() {
   }
 }
 
-async function setupUserLocation(userLatLng) {
-
-  if (!map.hasLayer(L.tileLayer)) {
-    L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
-      maxZoom: 20,
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
-
-    var userMarker = L.marker(userLatLng, { icon: homeIcon }).addTo(markerClusters);
-  }
-}
-
 // Show user location
 async function showUserLocation(position) {
 
@@ -357,7 +365,19 @@ async function showUserLocation(position) {
     position.coords.longitude
   );
 
+  // Update the map view to center around the user's location without zooming
+  map.panTo(userLatLng, { animate: false });
+  if (currentCountry) {
+    
   await updateMapUsingCoordinates(userLatLng);
+  // add User Marker  
+  var userMarker = L.marker(userLatLng, { icon: homeIcon }).addTo(map);
+  // Display the country border for the user's location
+  await updateMap(currentCountry.countryCode);
+} else {
+  // Handle the case where currentCountry is not defined
+  console.error("Error: currentCountry is not defined.");
+}
 }
 
 // User location error
@@ -376,8 +396,7 @@ async function showUserLocationError(error)
     }
   });
 
-  updateMap(defaultCountryCode);
-
+  await updateMap(defaultCountryCode);
   await getGeonameDataFromCountry(defaultCountryCode);
   await getFeatureMarkers(currentCountry);
   await addFeatureMarkersToMap();
@@ -388,9 +407,9 @@ async function showUserLocationError(error)
 }
 
 async function findUserCountry(userLatLng) {
-
   var lat = userLatLng.lat;
   var lng = userLatLng.lng;
+
   await $.ajax({
     url: geoNamesApiUrl,
     type: "GET",
@@ -398,6 +417,7 @@ async function findUserCountry(userLatLng) {
     success: function (response) {
       currentCountry = response["data"]["geonames"][0];
 
+      // Update the country selection
       $("#countrySelect option").each(function() {
         // Check if the data-country attribute matches the target country
         if ($(this).data("country") === currentCountry.countryName) {
@@ -414,12 +434,25 @@ map.on('layeradd', function (event) {
 });
 
 
+// Modify the setupUserLocation function
+async function setupUserLocation(userLatLng) {
+  if (!map.hasLayer(L.tileLayer)) {
+    L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
+      maxZoom: 20,
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+  }
+  map.panTo(userLatLng, { animate: false });
+}
+
 /* ------------------------------------ INFORMATION/HOW TO BUTTON ------------------------------- */
 $("#informationButton").on("click", function () {
-$("#informationModal").modal("show");
+  $("#informationModal").modal("show");
 });
 
-/* ------------------------------------ SEARCH ------------------------------- */
+/* ------------------------------------ BUTTON CLICKS ------------------------------- */
 // Close popup on map click
 map.on('layeradd', function (event) {
   layerControl.collapse();
@@ -476,7 +509,7 @@ $("#countrySelect").on("change", async function () {
   var countryCode = selectedOption.data("iso");
   var selectedISO = $(this).val();
 
-  updateMap(selectedISO);
+  await updateMap(selectedISO);
 
   await getGeonameDataFromCountry(countryCode);
   await getFeatureMarkers(currentCountry);
@@ -551,8 +584,8 @@ function populateCountryDropdown(countries) {
 }
 
 // Update the map based on selected country
-function updateMap(iso2) {
-
+async function updateMap(iso2) {
+  
   markerClusters.clearLayers();
 
   // AJAX call to get country border
@@ -580,6 +613,7 @@ function updateMap(iso2) {
     },
   });
 }
+
 // Add a global variable to store the current country border
 var currentCountryBorder = null;
 // Define a callback function for map update completion
@@ -649,8 +683,6 @@ async function updateDemographicsModal(geonamesData) {
   if (geonamesData) {
     currentLocation = geonamesData;
 
-    //console.log(geonamesData);
-
     let countryName = geonamesData["countryName"];
     let countryNameWithUnderscores = countryName.replaceAll(" ", "_");
     let countryCapital = geonamesData["capital"];
@@ -659,7 +691,7 @@ async function updateDemographicsModal(geonamesData) {
     let countryContinentName = geonamesData["continentName"];
     let countryContinent = geonamesData["continent"];
     let isoAlpha3 = geonamesData["countryCode"];
-
+    
     $('#countryName').html(`<a href="https://en.wikipedia.org/wiki/${countryNameWithUnderscores}" target="_blank" title="View More Details for ${countryName}">${countryName}</a>`);
     $('#countryCapital').html(`<a href="https://en.wikipedia.org/wiki/${countryCapitalWithUnderscores}" target="_blank" title="View More Details for ${countryCapital}">${countryCapital}</a>`);
     $('#countryPopulation').html(`${countryPopulation}`);
@@ -990,20 +1022,41 @@ async function getWeatherInformation(position) {
 }
 
 /*--------------------------------------------- EXCHANGE RATE --------------------------------*/
+// Initialize exchange rates object
+var exchangeRates = {};
+
 // Function to fetch and display exchange rate information
 async function getExchangeRates() {
+  showLoader();
+  await $.ajax({
+    url: exchangeDataApiUrl,
+    type: 'GET',
+    dataType: 'json',
+    data: { action: 'currencyName' },
+    success: function (result) {
+      
+      countryCurrencyNames = result.data;
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(JSON.stringify(jqXHR));
+      console.log(JSON.stringify(textStatus));
+      console.log(JSON.stringify(errorThrown));
+    }
+  });
 
   await $.ajax({
     url: exchangeDataApiUrl,
     type: 'GET',
     dataType: 'json',
-    data: {},
+    data: { action: 'currencyRate' },
     success: function (result) {
 
       if (result.status.name == "ok") {
-
+        
         // Extract exchange rates from response data
         var rates = result.data.rates;
+
+        // Populate the exchangeRates object
         for (var currencyCode in rates) {
           var rate = rates[currencyCode];
           exchangeRates[currencyCode] = {
@@ -1011,7 +1064,31 @@ async function getExchangeRates() {
             rate: rate
           };
         }
-        getCurrentExchangeRate(); // Get current exchange rate
+        // Populate the select dropdown with currency options
+        var selectDropdown = $('#fromCurrencySelect');
+        selectDropdown.empty(); // Clear previous options
+
+        for (var currencyCode in countryCurrencyNames) {
+          var currencyName = countryCurrencyNames[currencyCode];
+          selectDropdown.append(`<option value="${currencyCode}">${currencyName} (${currencyCode})</option>`);
+        }
+
+        // Add change event listener to dynamically added options
+        selectDropdown.on('change', function () {
+          var selectedCurrencyCode = $(this).val();
+          var selectedCountryName = countryCurrencyNames[selectedCurrencyCode];
+
+          $('#currentCurrencyDropdown').text(`${selectedCountryName}  (${selectedCurrencyCode})`);
+          $('#currentCurrencyDropdown').data('currency-code', selectedCurrencyCode);
+
+          // Update the exchange rate when the currency is changed
+          updateExchangeRate();
+        });
+
+        // Get current exchange rate for the initially selected currency
+        getCurrentExchangeRate();
+      } else {
+        console.error("Error fetching exchange rate data:", result.status.name);
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -1020,7 +1097,84 @@ async function getExchangeRates() {
       console.log(JSON.stringify(errorThrown));
     }
   });
+  hideLoader();
 }
+
+
+// Function to update the exchange rate and recalculate when the "Exchange currency from" is changed
+function updateExchangeRate() {
+  
+  // Update the exchange rate when the currency is changed
+  var currentCurrencyCode = $('#fromCurrencySelect').val();
+  var toCurrencyCode = $('#toCurrencySelect').val(); // Assuming you have a select element with id "toCurrencySelect"
+  var amountToExchange = parseFloat($('#amountToExchange').val());
+
+  // Check if exchange rates are available
+  if (!exchangeRates[currentCurrencyCode] || !exchangeRates[toCurrencyCode]) {
+    alert('Exchange rates not available for selected currencies.');
+    return;
+  }
+
+  // Calculate the exchange rate
+  var exchangeRate = exchangeRates[toCurrencyCode].rate / exchangeRates[currentCurrencyCode].rate;
+
+  // Calculate the exchanged amount
+  var exchangedAmount = amountToExchange * exchangeRate;
+
+  // Display the result in the modal
+  $('#exchangeResult').text('Result: ' + exchangedAmount.toFixed(2) + ' ' + toCurrencyCode);
+  // Display the exchange rate under the input field
+  $('#selectedExchangeRate').text('Exchange Rate: 1 ' + currentCurrencyCode + ' = ' + exchangeRate.toFixed(4) + ' ' + toCurrencyCode);
+}
+
+
+// Function to populate the currency dropdown with options
+function populateCurrencyDropdown(exchangeRates) {
+  var select = $('#toCurrencySelect');
+  select.empty();
+
+  // Add options dynamically based on exchange rates
+  for (var currencyCode in exchangeRates) {
+    
+    let selected;
+    var currencyName = countryCurrencyNames[currencyCode]
+    // select the currentCounty in the select dropdown.
+    if (currencyCode === currentCountry.currencyCode) {
+      selected = ' selected '
+    }
+    select.append('<option value="' + currencyCode + '"'+selected +'>' + currencyName + ' (' + currencyCode + ') ' + '</option>');
+  }
+}
+
+
+// Event listener for the "Calculate" button click
+$(document).on('click', '#calculateButton', function () {
+  updateExchangeRate();
+});
+
+
+// Event listener for the "Select Currency to Exchange From" dropdown change
+$(document).on('change', '#fromCurrencySelect', function () {
+  // Update the exchange rate when the currency is changed
+  updateExchangeRate();
+});
+
+// Event listener for the "Select Currency to Exchange To" dropdown change
+$(document).on('change', '#toCurrencySelect', function () {
+  // Update the exchange rate when the currency is changed
+  updateExchangeRate();
+});
+
+// Event listener for the new button to show the exchange rate modal
+$(document).on('click', '#showExchangeRateButton', function () {
+  // Open the exchange rate modal
+  $('#exchangeRateModal').modal('show');
+});
+
+// Set default value for amountToExchange
+$(document).ready(function () {
+  $('#amountToExchange').val('100');
+});
 
 function getCurrentExchangeRate() {
 
@@ -1051,6 +1205,9 @@ function getCurrentExchangeRate() {
       $('#modalCurrentExchangeRate').text(currentExchangeRate);
       $('#modalToExchangeRate').text(toExchangeRate);
 
+      // Populate the currency dropdown with options
+      populateCurrencyDropdown(exchangeRates);
+
       // Show the modal
       $('#exchangeRateModal').modal('show');
     },
@@ -1058,5 +1215,31 @@ function getCurrentExchangeRate() {
       console.error("Error fetching geonames data:", textStatus, errorThrown);
       console.log("Raw Server Response:", jqXHR.responseText);
     },
+  });
+}
+
+// Function to fetch and display the exchange rate from GBP to USD
+function showExchangeRate() {
+  // Make a request to your PHP script to fetch the latest exchange rates
+  $.ajax({
+    url: exchangeDataApiUrl,
+    method: 'GET',
+    success: function (response) {
+      if (response.status.code === '200') {
+        // Extract currency rates from the API response
+        var exchangeRates = response.data.rates;
+
+        // Get the exchange rate from GBP to USD
+        var gbpToUsdRate = exchangeRates['USD'] / exchangeRates['GBP'];
+
+        // Display the exchange rate
+        $('#exchangeRate').text('1 GBP = ' + gbpToUsdRate.toFixed(4) + ' USD');
+      } else {
+        console.error('Error fetching exchange rates:', response.status.description);
+      }
+    },
+    error: function (error) {
+      console.error('Error fetching exchange rates:', error);
+    }
   });
 }

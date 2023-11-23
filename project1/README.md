@@ -6,12 +6,10 @@
 - Simple and intuitive navigation
 - "How to use the map" button
 - Find information about the chosen country/location
-- See the currency exchange rate from the selected country currency to UK
-- Search for any location to appear on the map
+- Utilize the exchange rate to swiftly and accurately calculate the converted amount for seamless currency transactions.
 - Get news (for 50 countries) and Wikipedia information for different countries
 - Weather information for any chosen country
 - Park, forest, airports and shops markers for the chosen country
-- Postcode/location search function
 - Change map views
 
 ### Built With
@@ -26,6 +24,7 @@
 * Geonames API: [https://www.geonames.org/](https://www.geonames.org/)
 * Exchange Rate API: [https://openexchangerates.org/](https://openexchangerates.org/)
 * News API: [https://mediastack.com/](https://mediastack.com/)
+* [Stack Overflow](https://stackoverflow.com/) and many others
 
 ### Map Layers:
 
@@ -33,5 +32,4 @@
 * Open Topo Map: [https://garmin.opentopomap.org/](https://garmin.opentopomap.org/)
 * Google: [https://www.google.com](https://www.google.com)
 
-
-Live application can be viewed at:
+Live application can be viewed at: [https://kristijaerve.co.uk/project1/](https://kristijaerve.co.uk/project1/)

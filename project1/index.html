@@ -26,7 +26,7 @@
                 <a class="navbar-brand text-white p-2" href="#">Gazetteer</a>
                 <div class="mx-auto">
                     <select id="countrySelect">
-                        <!-- More dynamic options -->
+                        <!-- Dynamic options -->
                     </select>
                 </div>
                 <div>
@@ -51,6 +51,7 @@
             <div id="map-container">
                 <div id="map"></div>
             </div>
+
             <!-- Demographics Modal -->
             <div class="modal fade" id="demographicsModal" tabindex="-1" role="dialog"
                 aria-labelledby="demographicsModalLabel" aria-hidden="true">
@@ -88,38 +89,39 @@
                     </div>
                 </div>
             </div>
-            <!-- Exchange Rate Modal -->
-            <div class="modal fade" id="exchangeRateModal" tabindex="-1" role="dialog"
-                aria-labelledby="exchangeRateModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exchangeModalLabel">Exchange Rate Information</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" id="exchangeRateModalBody">
-                            <table class="table table-striped">
-                                <tbody><tr>
-                                    <td> Country Name</td>
-                                    <td id="modalCountryName"></td>
-                                </tr>        
-                                <tr>
-                                    <td>Current Currency Code</td>
-                                    <td id="modalCurrentCurrencyCode"></td>
-                                </tr>        
-                                <tr>
-                                    <td>Current Exchange Rate</td>
-                                    <td id="modalCurrentExchangeRate"></td>
-                                </tr>        
-                                <tr>
-                                    <td>Exchange Rate to GBP (British Pound)</td>
-                                    <td id="modalToExchangeRate"></td>
-                                </tr>              
-                            </tbody></table>
-                        </div>
+
+<!-- Exchange Rate Modal -->
+    
+    <div class="modal fade" id="exchangeRateModal" tabindex="-1" role="dialog" aria-labelledby="exchangeRateModalLabel"
+    aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exchangeRateModalLabel">Exchange Rate Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="exchangeRateModalBody">
+                    <div class="form-group">
+                            <label for="fromCurrencySelect">Select currency to exchange from:</label>
+                            <select class="form-select " id="fromCurrencySelect"></select>
                     </div>
+                    <!-- Display the exchange rate -->
+                    <div class="fs-6 text-small fst-italic mt-3 mb-3" id="selectedExchangeRate"></div>
+                    <div class="form-group">
+                        <!-- Dropdown for "Select Currency to Exchange To" -->
+                        <label for="toCurrencySelect">Select Currency to Exchange To:</label>
+                        <select class="form-select" id="toCurrencySelect"></select>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="amountToExchange">Amount to Exchange:</label>
+                        <input type="number" class="form-control" id="amountToExchange" placeholder="Enter amount">
+                    </div>
+                    <button type="button" class="btn btn-primary mt-2" id="calculateButton">Calculate</button>
+                    <div class="fw-bold fs-6 text-success text-uppercase mt-3" id="exchangeResult" ></div>
                 </div>
             </div>
+        </div>
+    </div>
 
 
             <!-- News Modal -->
@@ -133,27 +135,27 @@
                         <div class="modal-body" id="newsModalBody">
                             <!-- Article 1 -->
                             <div class="mb-3" id="article1">
-                                <h6 class="mb-2" id="article1Title"><strong></strong></h6>
+                                <h6 class="mb-2 fw-bold" id="article1Title"></h6>
                                 <p class="text-muted" id="article1Description"></p><br>
                             </div>
                             <!-- Article 2 -->
                             <div class="mb-3" id="article2">
-                                <h6 class="mb-2" id="article2Title"><strong></strong></h6>
+                                <h6 class="mb-2 fw-bold" id="article2Title"></h6>
                                 <p class="text-muted" id="article2Description"></p><br>
                             </div>
                             <!-- Article 3 -->
                             <div class="mb-3" id="article3">
-                                <h6 class="mb-2" id="article3Title"><strong></strong></h6>
+                                <h6 class="mb-2 fw-bold" id="article3Title"></h6>
                                 <p class="text-muted" id="article3Description"></p><br>
                             </div>
                             <!-- Article 4 -->
                             <div class="mb-3" id="article4">
-                                <h6 class="mb-2" id="article4Title"><strong></strong></h6>
+                                <h6 class="mb-2 fw-bold" id="article4Title"></h6>
                                 <p class="text-muted" id="article4Description"></p><br>
                             </div>
                             <!-- Article 5 -->
                             <div class="mb-3" id="article5">
-                                <h6 class="mb-2" id="article5Title"><strong></strong></h6>
+                                <h6 class="mb-2 fw-bold" id="article5Title"></h6>
                                 <p class="text-muted" id="article5Description"></p><br>
                             </div>
                         </div>
@@ -237,15 +239,15 @@
                 </div>
             </div>
 
+            <!-- How To Use Map -->
             <div class="modal fade" id="informationModal" tabindex="-1" role="dialog" aria-labelledby="informationModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="informationModalLabel">Information</h5>
+                            <h5 class="modal-title" id="informationModalLabel">How to Use the Map:</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="informationModalBody">
-                            <h2>How to Use the Map:</h2>
 
                             <p><strong>1. Country Selection:</strong> Choose a county by clicking on the country select drop-down menu.</p>
                             
@@ -255,9 +257,6 @@
                             <h4>Right Side Buttons:</h4>
                             
                             <ul>
-                                <li>
-                                    <strong>Magnifying Glass Icon:</strong> Search for any location on the map by clicking on the icon, then enter its address, postcode, or name.
-                                </li>
                                 <li>
                                     <strong>Layers Icon:</strong>
                                     <ul>
@@ -275,7 +274,15 @@
                                 <li><strong>Globe Icon:</strong> Explore the demographics of the selected country.</li>
                                 <li><strong>News Button:</strong> Access available news for the country. (The button is hidden if no news is available.)</li>
                                 <li><strong>"W" Icon:</strong> Retrieve Wikipedia information about the selected country.</li>
-                                <li><strong>Arrows Button:</strong> View currency exchange information.</li>
+                                <li><strong>Arrows Button:</strong> Retrieve currency exchange information.</li>
+                                <ul>
+                                    <li><strong>Select Currencies:</strong> Choose your source currency and the currency you wish to exchange it for.</li>
+                                    <li><strong>Live Exchange Rate: </strong>Upon selecting your currencies, instantly view the up-to-date live exchange rate.</li>
+                                    <li><strong>Enter Amount:</strong> Input the specific amount you intend to exchange.</li>
+                                    <li><strong>Calculate Result: </strong>Click the "Calculate" button to obtain the calculated exchange result effortlessly.</li>
+
+                                </ul>
+                            </li>
                                 <li><strong>Sun Icon:</strong> Access detailed weather information.</li>
                             </ul>
                         </div>
@@ -285,6 +292,7 @@
 
         </main>
         
+        <!-- FOOTER -->
         <footer class="container-fluid text-center bg-dark p-3 fixed-bottom">
             <div class="container text-light">
                 <p>
