@@ -12,6 +12,7 @@ var geoNamesApiUrl = "./php/geonames-api.php";
 var wikimediaApiUrl = "./php/wikimedia-api.php";
 var exchangeDataApiUrl = "./php/exchange-rate-api.php";
 
+
 // Global scope variables
 
 var currentLocation = {}; 
@@ -24,6 +25,7 @@ var map = L.map("map", {
   doubleClickZoom: false,
   maxZoom: 20, // Add maxZoom property
 }).setView([51.505, -0.09], 6);
+
 
 // GeoJSON and Marker Cluster Groups
 let border = new L.GeoJSON();
@@ -68,10 +70,14 @@ var parkMapMarkers = [];
 
 var homeIcon = L.divIcon({
   className: 'leaflet-div-icon',
-  html: '<div class="icon-container"><i class="fas fa-home fa-2x"></i></div>',
-  iconSize: [40, 40],  
+  html: '<div class="icon-container"></div>',
+});
+
+var customCapitalIcon = L.icon({
+  iconUrl: 'node_modules/bootstrap-icons/icons/Circle_4.png',
+  iconSize: [40, 40],
   iconAnchor: [20, 40],
-  popupAnchor: [0, -40],
+  popupAnchor: [0, -40] 
 });
 
 var customShopIcon = L.icon({
@@ -197,6 +203,7 @@ L.easyButton({
       title: "News",
       onClick: function (btn, map) {
         fetchAndDisplayNews();
+        console.log("newsBtn clicked");
       },
     },
   ],
@@ -254,6 +261,7 @@ function showLoader() {
 
 // Function to hide the loader
 function hideLoader() {
+  document.getElementById('preloader').style.display = 'none';
   $("#loader-container").hide();
 }
 
@@ -269,15 +277,27 @@ async function addMarkers(data, markerClusterGroup, customIcon) {
 
   var markerName = capitalizeFirstLetter(data.fcodeName);
   var marker = L.marker([parseFloat(data.lat), parseFloat(data.lng)], { icon: customIcon }).bindPopup(`<b>${markerName}</b>: ${data.name}`);
+     // Bind a tooltip to the marker
+    marker.bindTooltip(data.name, {
+      permanent: false,  // Tooltip will only show on hover
+      direction: 'top',  // The direction of the tooltip
+      offset: L.point(0, -20)  // Offset to position the tooltip above the marker
+  });
+ 
   markerClusterGroup.addLayer(marker);
 }
 
-markerClusters = L.markerClusterGroup().addTo(map);
+L.easyButton("fa-circle-info fa-2x", function (btn, map) {
+  
+  $('#howToModal').modal("show");
+  
+}).addTo(map);
 
 /*--------------------------------------------- DOCUMENT READY --------------------------------*/
 $(document).ready(async() => {
 // Show loading screen
 showLoader();
+
 
 // geocoder.on('markgeocode', async function (event) {
 
@@ -343,7 +363,7 @@ async function setupUserLocation(userLatLng) {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    var userMarker = L.marker(userLatLng, { icon: homeIcon }).addTo(markerClusters);
+    // var userMarker = L.marker(userLatLng, { icon: homeIcon }).addTo(markerClusters);
   }
 }
 function getUserLocation() {
@@ -371,7 +391,7 @@ async function showUserLocation(position) {
     
   await updateMapUsingCoordinates(userLatLng);
   // add User Marker  
-  var userMarker = L.marker(userLatLng, { icon: homeIcon }).addTo(map);
+  // var userMarker = L.marker(userLatLng, { icon: homeIcon }).addTo(map);
   // Display the country border for the user's location
   await updateMap(currentCountry.countryCode);
 } else {
@@ -429,11 +449,6 @@ async function findUserCountry(userLatLng) {
   });
 }
 
-map.on('layeradd', function (event) {
-  layerControl.collapse();
-});
-
-
 // Modify the setupUserLocation function
 async function setupUserLocation(userLatLng) {
   if (!map.hasLayer(L.tileLayer)) {
@@ -453,10 +468,7 @@ $("#informationButton").on("click", function () {
 });
 
 /* ------------------------------------ BUTTON CLICKS ------------------------------- */
-// Close popup on map click
-map.on('layeradd', function (event) {
-  layerControl.collapse();
-});
+
   
 // Map double click
 map.on("dblclick", onMapClick);
@@ -619,6 +631,53 @@ var currentCountryBorder = null;
 // Define a callback function for map update completion
 var mapUpdateCallback;
 
+
+var capitalMarker = null;
+
+
+/*--------------------------------------------- FIND CAPITAL --------------------------------*/
+async function findCapital(currentCountry) {
+
+  var capital = currentCountry.capital;
+      // Clear the existing capital marker if it exists
+      if (capitalMarker) {
+        map.removeLayer(capitalMarker);
+        capitalMarker = null;
+    }
+
+
+  await $.ajax({
+    url: geoNamesApiUrl,
+    type: "GET",
+    dataType: "JSON",
+    data: { action: 'findCapital', capital: capital },
+    success: function (response) {
+      let geonamesData;
+
+      if (response["data"]["geonames"][0]) {
+        geonamesData = response["data"]["geonames"][0];
+      
+
+      const latitude = geonamesData.lat;
+      const longitude = geonamesData.lng;
+
+      // Add a marker at the capital coordinates
+      capitalMarker = L.marker([latitude, longitude],{ icon: customCapitalIcon })
+        .addTo(map)
+        .bindPopup(`<b>Capital: ${capital}`)
+        .openPopup();
+      
+        map.setView([latitude, longitude], 6);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log("Error finding capital data:", textStatus, errorThrown);
+      console.log("Raw Server Response:", jqXHR.responseText);
+    },
+  });
+}
+
+
 });
 
 // Function to capitalizeFirstLetter - used for fcodeName in addMarkers function
@@ -626,22 +685,38 @@ function capitalizeFirstLetter(word) {
   return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 }
 
+var defaultImages = [
+  "./images/1.jpg", "./images/2.jpg", "./images/3.jpg", "./images/4.jpg", "./images/5.jpg"
+];
 /* -------------------------------------- NEWS MODAL - UPDATE AND DISPLAY ----------*/
-// Function to update and display news modal
+// Update and display news modal
 function updateAndDisplayNewsModal(newsData) {
+
+  var defaultImageIndex = 0;
+
   if (newsData.error) {
       console.log(newsData.error);
       showModal('News Information', "<p>No news information available.</p>");
   } else {
-    // Update content for each article
-    for (var i = 0; i < newsData.data.length; i++) {
-      var article = newsData.data[i];
-      var articleId = "article" + (i + 1);
+   // Update content for each article
+for (var i = 0; i < newsData.data.length; i++) {
+  var article = newsData.data[i];
+  var articleId = "article" + (i + 1);
+  var articleImage = article.image || defaultImages[defaultImageIndex % defaultImages.length];
 
-      // Update article title and description
-      $("#" + articleId + "Title").text(article.title);
-      $("#" + articleId + "Description").text(article.description);
-    }
+  // Update article title and description
+  $("#" + articleId + "Title").text(article.title);
+  $("#" + articleId + "Description").text(article.description);
+  $("#article" + (i + 1) + "Image").attr("src", articleImage);
+  //Full article link
+  var articleLink = article.url ? `<a href="${article.url}" target="_blank">Full article</a>` : '';
+  $("#article" + (i + 1) + "Link").html(articleLink);
+
+  // Increment default image index if a default image was used
+  if (!article.image) {
+    defaultImageIndex++;
+  }
+}
 
     // Show the modal
     $('#newsModal').modal('show');
@@ -649,7 +724,7 @@ function updateAndDisplayNewsModal(newsData) {
 }
 
 
-// Function to fetch and display news information
+// Fetch and display news information
 async function fetchAndDisplayNews() {
   var selectedOption =
     document.getElementById("countrySelect").options[
@@ -666,6 +741,7 @@ async function fetchAndDisplayNews() {
     });
 
     updateAndDisplayNewsModal(newsResponse);
+    console.log("newsResponse");
   } catch (error) {
     console.error("Error fetching news data:", error);
     hideNewsButton();
@@ -687,16 +763,26 @@ async function updateDemographicsModal(geonamesData) {
     let countryNameWithUnderscores = countryName.replaceAll(" ", "_");
     let countryCapital = geonamesData["capital"];
     let countryCapitalWithUnderscores = countryCapital.replaceAll(" ", "_");
-    let countryPopulation = (geonamesData["population"] / 1000000).toFixed(1) + 'M';
+    let countryPopulation = numeral(geonamesData["population"]).format('0,0');
     let countryContinentName = geonamesData["continentName"];
     let countryContinent = geonamesData["continent"];
-    let isoAlpha3 = geonamesData["countryCode"];
-    
+    let countryIsoAlpha2 = geonamesData["countryCode"];
+    let countryIsoAlpha3 = geonamesData["isoAlpha3"];
+    let countryLanguages = geonamesData['languages'];
+    let countryAreainSqKm = numeral(geonamesData["areaInSqKm"]).format(0, 0);
+    let countryCurrencyCode = geonamesData["currencyCode"];
+    let countryPostalCodeFormat = geonamesData["postalCodeFormat"] == "" ? "n/a" : geonamesData["postalCodeFormat"];
     $('#countryName').html(`<a href="https://en.wikipedia.org/wiki/${countryNameWithUnderscores}" target="_blank" title="View More Details for ${countryName}">${countryName}</a>`);
-    $('#countryCapital').html(`<a href="https://en.wikipedia.org/wiki/${countryCapitalWithUnderscores}" target="_blank" title="View More Details for ${countryCapital}">${countryCapital}</a>`);
-    $('#countryPopulation').html(`${countryPopulation}`);
-    $('#countryContinent').html(`${countryContinentName} (${countryContinent })`);
-    $('#countryFlag').html(`<img src="https://flagcdn.com/h60/${isoAlpha3.toLowerCase()}.png">`);   
+    $('#countryCapital').html(`<a href="https://en.wikipedia.org/wiki/${countryCapitalWithUnderscores}" target="_blank" title="View More Details for ${countryCapital}">${countryCapital}</a>`);   
+    $('#countryPopulation').html(`${countryPopulation.toUpperCase()}`);
+    $('#countryContinent').html(`${countryContinentName} (${countryContinent})`);
+    $('#countryLanguages').html(`${countryLanguages}`);
+    $('#countryIsoAlpha2').html(`${countryIsoAlpha2}`);
+    $('#countryIsoAlpha3').html(`${countryIsoAlpha3}`);
+    $('#countryAreaInSqKm').html(`${countryAreainSqKm}`);
+    $('#countryCurrencyCode').html(`${countryCurrencyCode}`);
+    $('#countryPostalCodeFormat').html(`${countryPostalCodeFormat}`);
+    $('#countryFlag').html(`<img src="https://flagcdn.com/h60/${countryIsoAlpha2.toLowerCase()}.png">`);   
     $("#demographicsModal").modal("show");
   }
 }
@@ -750,44 +836,10 @@ async function fetchAndDisplayDemographics() {
   });
 }
 
-/*--------------------------------------------- FIND CAPITAL --------------------------------*/
-async function findCapital(currentCountry) {
-
-  var capital = currentCountry.capital;
-
-  await $.ajax({
-    url: geoNamesApiUrl,
-    type: "GET",
-    dataType: "JSON",
-    data: { action: 'findCapital', capital: capital },
-    success: function (response) {
-      let geonamesData;
-
-      if (response["data"]["geonames"][0]) {
-        geonamesData = response["data"]["geonames"][0];
-      }
-
-      const latitude = geonamesData.lat;
-      const longitude = geonamesData.lng;
-
-      // Add a marker at the capital coordinates
-      L.marker([latitude, longitude])
-        .addTo(map)
-        .bindPopup(`<b>Capital: ${capital}`)
-        .openPopup();
-      
-        map.setView([latitude, longitude], 6);
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log("Error finding capital data:", textStatus, errorThrown);
-      console.log("Raw Server Response:", jqXHR.responseText);
-    },
-  });
-}
-
 /*--------------------------------------------- MARKERS --------------------------------*/
 async function getFeatureMarkers(currentCountry) {
   // Clear existing markers
+  capitalMarker = []
   shopMapMarkers = [];
   airportMapMarkers = [];
   forestMapMarkers = [];
@@ -832,65 +884,36 @@ async function addFeatureMarkersToMap() {
   map.removeLayer(markerClusters);
   markerClusters.clearLayers();
 
-  // Clear existing map markers
-  map.eachLayer(function (layer) {
-    if (layer instanceof L.Marker) {
-      map.removeLayer(layer);
-    }
-  });
-
   shopMarkers.clearLayers();
   airportMarkers.clearLayers();
   forestMarkers.clearLayers();
   parkMarkers.clearLayers();
 
-  // Check if there are markers for Shops
-  if (shopMapMarkers.length > 0) {
-    for (i = 0; i < shopMapMarkers.length; i++) {
-      addMarkers(shopMapMarkers[i], shopMarkers, customShopIcon);
-    }
-    map.addLayer(shopMarkers);
-  } else {
-    shopMarkers.clearLayers();
-    // No shops to show, disable the overlay layer
-    disableOverlayLayer("Shops");
-  }
+  // Add Shop Markers
+  shopMapMarkers.forEach(markerData => {
+    addMarkers(markerData, shopMarkers, customShopIcon);
+});
 
-  // Check if there are markers for Airports
-  if (airportMapMarkers.length > 0) {
-    for (i = 0; i < airportMapMarkers.length; i++) {
-      addMarkers(airportMapMarkers[i], airportMarkers, customPlaneIcon);
-    }
-    map.addLayer(airportMarkers);
-  } else {
-    airportMarkers.clearLayers();
-    // No airports to show, disable the overlay layer
-    disableOverlayLayer("Airports");
-  }
+// Add Airport Markers
+airportMapMarkers.forEach(markerData => {
+    addMarkers(markerData, airportMarkers, customPlaneIcon);
+});
 
-  // Check if there are markers for Forests
-  if (forestMapMarkers.length > 0) {
-    for (i = 0; i < forestMapMarkers.length; i++) {
-      addMarkers(forestMapMarkers[i], forestMarkers, customForestIcon);
-    }
-    map.addLayer(forestMarkers);
-  } else {
-    forestMarkers.clearLayers();
-    // No forests to show, disable the overlay layer
-    disableOverlayLayer("Forests");
-  }
+// Add Forest Markers
+forestMapMarkers.forEach(markerData => {
+    addMarkers(markerData, forestMarkers, customForestIcon);
+});
 
-  // Check if there are markers for Parks
-  if (parkMapMarkers.length > 0) {
-    for (i = 0; i < parkMapMarkers.length; i++) {
-      addMarkers(parkMapMarkers[i], parkMarkers, customParkIcon);
-    }
-    map.addLayer(parkMarkers);
-  } else {
-    parkMarkers.clearLayers();
-    // No parks to show, disable the overlay layer
-    disableOverlayLayer("Parks");
-  }
+// Add Park Markers
+parkMapMarkers.forEach(markerData => {
+    addMarkers(markerData, parkMarkers, customParkIcon);
+});
+
+// Add each marker cluster group to the map
+map.addLayer(shopMarkers);
+map.addLayer(airportMarkers);
+map.addLayer(forestMarkers);
+map.addLayer(parkMarkers);
 }
 
 // Function to disable an overlay layer in the legend
@@ -903,7 +926,7 @@ function disableOverlayLayer(layerName) {
 }
 
 /* --------------------------------------------- WIKIPEDIA  --------------------------------*/
-// Function to update and display Wikimedia modal
+// Update and display Wikimedia modal
 function updateAndDisplayWikimediaModal(response) {
   info = response["data"]["geonames"];
 
@@ -921,7 +944,7 @@ function updateAndDisplayWikimediaModal(response) {
   $('#wikimediaModal').modal('show');
 }
 
-// Function to fetch and display Wikimedia information
+// Fetch and display Wikimedia information
 function getWikimedia() {
   var country = currentCountry.capital;
 
@@ -941,9 +964,19 @@ function getWikimedia() {
 }
 
 /*-------------------------------------------- WEATHER --------------------------------*/
-// Function to fetch and display weather information
+// Fetch and display weather information for the capital
 async function getWeather() {
-  capital = currentCountry.capital;
+
+  let capital = currentCountry.capital;
+  let countryName = currentCountry.countryName; 
+ 
+  console.log("Capital:", capital, "Country:", countryName);
+  if (!countryName || !capital) {
+    console.error('Country name or capital is undefined');
+    return;
+}
+
+  updateModalTitle(countryName, capital);
 
   await $.ajax({
     url: geoNamesApiUrl,
@@ -955,7 +988,6 @@ async function getWeather() {
 
       if (response["data"]["geonames"][0]) {
         geonamesData = response["data"]["geonames"][0];
-      }
 
       var country = {
         latlng: {
@@ -963,9 +995,8 @@ async function getWeather() {
           lon: geonamesData.lng
         }
       };
-    
-      getWeatherInformation(country);
-    
+      getWeatherInformation(country, capital);
+      }
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log("Error finding Weather data:", textStatus, errorThrown);
@@ -974,52 +1005,69 @@ async function getWeather() {
   });
 }
 
-async function getWeatherInformation(position) {
+function updateModalTitle(countryName, capital) {
+  const modalTitle = `${countryName} - ${capital}`;
+  document.getElementById('weatherModalLabel').textContent = modalTitle;
+}
+
+// Function to fetch weather information
+async function getWeatherInformation(position, capital) {
 
   var lat = position.latlng.lat;
   var lon = position.latlng.lon;
 
-  // AJAX call to get weather information
   await $.ajax({
     url: weatherApiUrl,
     type: "GET",
-    data: { lat: lat, lon: lon },
+    dataType: "JSON",
+    data: { action: 'forecast', capital: capital },
     success: function (weatherResponse) {
-      try {
+
         // Parse weather data
-        var weatherData = weatherResponse;
+        var weatherData = weatherResponse.data;
 
-        // Extract relevant information
-        var temperatureCelsius = weatherData.main.temp - 273.15; // Convert from Kelvin to Celsius
-        var temperatureFahrenheit = (temperatureCelsius * 9) / 5 + 32; // Convert Celsius to Fahrenheit
-        var description = weatherData.weather[0].description;
-        var windSpeed = weatherData.wind.speed;
-        var humidity = weatherData.main.humidity;
-        var placeName = weatherData.name;
+        console.log(weatherData);
+        $('#weatherModal').modal('show');
+        displayWeatherData(weatherData, 0, 'today'); // Today's weather
+        displayWeatherData(weatherData, 1, 'tomorrow'); // Tomorrow's weather
+        displayWeatherData(weatherData, 2, 'dayAfter'); // Day after tomorrow's weather
 
-        // Update weather modal content
-        $('#weatherPlaceName').html(`<strong>${placeName}</strong>`);
-        $('#weatherTemperatureCelsius').html(`${temperatureCelsius.toFixed(2)}°C`);
-        $('#weatherTemperatureFahrenheit').html(`${temperatureFahrenheit.toFixed(2)}°F`);
-        $('#weatherDescription').html(`${description}`);
-        $('#weatherWindSpeed').html(`${windSpeed} m/s`);
-        $('#weatherHumidity').html(`${humidity}%`);
-
-        // Show the weather modal
         $('#weatherModal').modal('show');
 
-      } catch (error) {
-        console.error("Error parsing weather data:", error);
-      }
     },
     error: function (xhr, status, error) {
       console.error("Error fetching weather data:", error);
-
-      // Log the response for debugging
       console.log("Raw Weather Response:", xhr.responseText);
     },
   });
 }
+
+// Function to display weather data
+function displayWeatherData(weatherData, dayOffset, prefix) {
+  const index = dayOffset * 8; 
+  const weatherForDay = weatherData.list[index];
+
+  if (!weatherForDay) {
+    console.error('No weather data available for', prefix);
+    return;
+  }
+  console.log(prefix, weatherForDay); 
+  const date = new Date(weatherForDay.dt * 1000);
+  const formattedDate = date.toString('dd/MM'); // Using Datejs for formatting
+  const weatherDescription = weatherForDay.weather[0].description; 
+  const temp = numeral(weatherForDay.main.feels_like).format('0.0');
+  const maxTemp = numeral(weatherForDay.main.temp_max).format('0.0');
+  const minTemp = numeral(weatherForDay.main.temp_min).format('0.0');
+  const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherForDay.weather[0].icon}.png`;
+
+  document.getElementById(`${prefix}Date`).textContent = formattedDate;
+  document.getElementById(`${prefix}Icon`).src = weatherIconUrl;
+  document.getElementById(`${prefix}WeatherDescription`).textContent = weatherDescription;
+  document.getElementById(`${prefix}FeelsLike`).textContent = temp;
+  document.getElementById(`${prefix}MaxTemp`).textContent = maxTemp;
+  document.getElementById(`${prefix}MinTemp`).textContent = minTemp;
+}
+
 
 /*--------------------------------------------- EXCHANGE RATE --------------------------------*/
 // Initialize exchange rates object
@@ -1053,6 +1101,7 @@ async function getExchangeRates() {
 
       if (result.status.name == "ok") {
         
+        $('#currencyFrom').text(currentCountry.currencyCode);
         // Extract exchange rates from response data
         var rates = result.data.rates;
 
@@ -1106,8 +1155,8 @@ function updateExchangeRate() {
   
   // Update the exchange rate when the currency is changed
   var currentCurrencyCode = $('#fromCurrencySelect').val();
-  var toCurrencyCode = $('#toCurrencySelect').val(); // Assuming you have a select element with id "toCurrencySelect"
   var amountToExchange = parseFloat($('#amountToExchange').val());
+  var toCurrencyCode = currentCountry.currencyCode;
 
   // Check if exchange rates are available
   if (!exchangeRates[currentCurrencyCode] || !exchangeRates[toCurrencyCode]) {
@@ -1115,43 +1164,21 @@ function updateExchangeRate() {
     return;
   }
 
+  console.log(exchangeRates[currentCurrencyCode].rate);
+
   // Calculate the exchange rate
-  var exchangeRate = exchangeRates[toCurrencyCode].rate / exchangeRates[currentCurrencyCode].rate;
+  var exchangeRate = exchangeRates[currentCurrencyCode].rate;
 
   // Calculate the exchanged amount
   var exchangedAmount = amountToExchange * exchangeRate;
 
   // Display the result in the modal
-  $('#exchangeResult').text('Result: ' + exchangedAmount.toFixed(2) + ' ' + toCurrencyCode);
-  // Display the exchange rate under the input field
-  $('#selectedExchangeRate').text('Exchange Rate: 1 ' + currentCurrencyCode + ' = ' + exchangeRate.toFixed(4) + ' ' + toCurrencyCode);
+  $('#exchangeResult').text('Result: ' + exchangedAmount.toFixed(2));
 }
 
-
-// Function to populate the currency dropdown with options
-function populateCurrencyDropdown(exchangeRates) {
-  var select = $('#toCurrencySelect');
-  select.empty();
-
-  // Add options dynamically based on exchange rates
-  for (var currencyCode in exchangeRates) {
-    
-    let selected;
-    var currencyName = countryCurrencyNames[currencyCode]
-    // select the currentCounty in the select dropdown.
-    if (currencyCode === currentCountry.currencyCode) {
-      selected = ' selected '
-    }
-    select.append('<option value="' + currencyCode + '"'+selected +'>' + currencyName + ' (' + currencyCode + ') ' + '</option>');
-  }
-}
-
-
-// Event listener for the "Calculate" button click
-$(document).on('click', '#calculateButton', function () {
+$(document).on('change', '#amountToExchange', function () {
   updateExchangeRate();
 });
-
 
 // Event listener for the "Select Currency to Exchange From" dropdown change
 $(document).on('change', '#fromCurrencySelect', function () {
@@ -1159,22 +1186,12 @@ $(document).on('change', '#fromCurrencySelect', function () {
   updateExchangeRate();
 });
 
-// Event listener for the "Select Currency to Exchange To" dropdown change
-$(document).on('change', '#toCurrencySelect', function () {
-  // Update the exchange rate when the currency is changed
-  updateExchangeRate();
-});
 
 // Event listener for the new button to show the exchange rate modal
 $(document).on('click', '#showExchangeRateButton', function () {
-  // Open the exchange rate modal
   $('#exchangeRateModal').modal('show');
 });
 
-// Set default value for amountToExchange
-$(document).ready(function () {
-  $('#amountToExchange').val('100');
-});
 
 function getCurrentExchangeRate() {
 
@@ -1206,7 +1223,7 @@ function getCurrentExchangeRate() {
       $('#modalToExchangeRate').text(toExchangeRate);
 
       // Populate the currency dropdown with options
-      populateCurrencyDropdown(exchangeRates);
+     // populateCurrencyDropdown(exchangeRates);
 
       // Show the modal
       $('#exchangeRateModal').modal('show');
@@ -1220,7 +1237,7 @@ function getCurrentExchangeRate() {
 
 // Function to fetch and display the exchange rate from GBP to USD
 function showExchangeRate() {
-  // Make a request to your PHP script to fetch the latest exchange rates
+
   $.ajax({
     url: exchangeDataApiUrl,
     method: 'GET',

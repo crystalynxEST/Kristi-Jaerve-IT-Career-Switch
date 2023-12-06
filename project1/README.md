@@ -14,7 +14,7 @@
 
 ### Built With
 
-- HTML, CSS, JavaScript, [Leaflet](https://leafletjs.com/), [Bootstrap](https://getbootstrap.com/), jQuery, [Font Awesome](https://fontawesome.com/) for the frontend
+- HTML, CSS, JavaScript, [Leaflet](https://leafletjs.com/), [Bootstrap](https://getbootstrap.com/), jQuery, [Font Awesome](https://fontawesome.com/) , [NumeralJS](http://numeraljs.com/) for the frontend
 - PHP, JSON, Ajax, Open Location Code for the backend
 
 ### Contribution:

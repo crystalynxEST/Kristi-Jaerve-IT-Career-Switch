@@ -12,31 +12,28 @@
         <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
         <link rel="stylesheet" href="resources/leaflet/leaflet.css" />
         <link rel="stylesheet" href="resources/Leaflet.markercluster-1.4.1/dist/MarkerCluster.css" />
-        <link rel="stylesheet" href="resources/Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css" />
-        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="resources/Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css" /> 
         <link rel="stylesheet" href="node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css" />
         <link rel="stylesheet" href="resources/Leaflet.EasyButton-master/src/easy-button.css" />
         <link rel="stylesheet" href="css/fontawesome-free-6.4.2-web/css/all.min.css" />
         <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="css/style.css" />
+        
     </head>
 
     <body class="mt-0 pt-0">
 
-        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-secondary bg-gradient border-bottom"> 
-            <div class="container-fluid">
-                <a class="navbar-brand text-white p-2" href="#">Gazetteer</a>
-                <div class="mx-auto">
-                    <select id="countrySelect">
-                        <!-- Dynamic options -->
-                    </select>
-                </div>
-                <div>
-                    <a class="navbar-brand text-black" id="informationButton">
-                        <i class="fas fa-question-circle text-light"></i>
-                    </a>
-                </div>
-            </div>
-        </nav>
+        <div class="select-info-container d-flex justify-content-center align-items-center">
+            <select id="countrySelect" class="form-select shadow-sm">
+
+                <!-- Options here -->
+            </select>
+
+        </div>
+        
+        <div id="preloader">
+            Loading...
+        </div>
         
         <main class="container-fluid">
             <!-- Loader Container -->
@@ -53,264 +50,480 @@
                 <div id="map"></div>
             </div>
 
-            <!-- Demographics Modal -->
-            <div class="modal fade" id="demographicsModal" tabindex="-1" role="dialog"
-                aria-labelledby="demographicsModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="demographicsModalLabel">Demographics Information</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-                        </div>
-                        <div class="modal-body" id="modalBody">
+            <!-- Country Info -->
+            <div id="demographicsModal" class="modal fade" data-bs-backdrop="false" tabindex="-1" aria-labelledby="demographicsModalLabel">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content shadow">
+
+                    <div class="modal-header bg-primary bg-gradient text-white">
+                        <h5 class="modal-title"><i class="fa-solid fa-circle-info fa-xl me-2"></i>Country Quick View</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>           
+                    
+                    <div class="modal-body" id="modalBody">
                             <table class="table table-striped">
-                                <tbody><tr>
-                                    <td>Name</td>
-                                    <td id="countryName"></td>
-                                </tr>        
-                                <tr>
-                                    <td>Capital City</td>
-                                    <td id="countryCapital"></td>
-                                </tr>        
-                                <tr>
-                                    <td>Population</td>
-                                    <td id="countryPopulation"></td>
-                                </tr>        
-                                <tr>
-                                    <td>Continent</td>
-                                    <td id="countryContinent"></td>
-                                </tr>        
-                                <tr>
-                                    <td>Flag</td>
-                                    <td id="countryFlag"></td>
-                                </tr>        
-                            </tbody></table>
-                        </div>
+                        </tr>
+
+                    <tr>
+                        <td class="text-center">
+                            <i class="fa-solid fa-globe fa-xl text-primary"></i>
+                        </td>
+                        <td>
+                            Flag
+                        </td>
+                            <td id="countryFlag" class="text-end">              
+                        </td>
+                    </tr>
+                        
+                    <tr>
+                        <td class="text-center col-2">
+                            <i class="fa-solid fa-landmark-flag fa-xl text-primary"></i>
+                        </td>
+                        <td class="text-nowrap">
+                            Capital city
+                        </td>
+                            <td id="countryName" class="text-end"></td>
+                    </tr>
+
+                        <tr>
+                            <td class="text-center">
+                                <i class="fa-solid fa-globe fa-xl text-primary"></i>
+                            </td>
+                        <td>
+                            Continent
+                        </td>
+                        <td id="countryContinent" class="text-end">              
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td class="text-center">
+                                <i class="fa-solid fa-ear-listen fa-xl text-primary"></i>
+                            </td>
+                        <td>
+                            Languages
+                        </td>
+                        <td id="countryLanguages" class="text-end">
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td class="text-center">
+                                <i class="fa-solid fa-coins fa-xl text-primary"></i>
+                            </td>             
+                            <td>
+                                Currency
+                            </td>
+                            <td id="countryCurrencyCode" class="text-end">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <i class="fa-solid fa-equals fa-xl text-primary"></i>
+                            </td>
+                
+                            <td class="text-nowrap">
+                                ISO alpha 2
+                            </td>
+                
+                            <td id="countryIsoAlpha2" class="text-end">
+                            </td>
+                
+                            </tr>
+                        <tr>
+                            <td class="text-center">
+                                <i class="fa-solid fa-equals fa-xl text-primary"></i>
+                            </td>
+                            <td class="text-nowrap">
+                                ISO alpha 3
+                            </td>
+                            <td id="countryIsoAlpha3" class="text-end">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-center">
+                                <i class="fa-solid fa-person fa-xl text-primary"></i>
+                            </td>
+                            <td>
+                                Population
+                            </td>
+                            <td id="countryPopulation" class="text-end">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-center">
+                                <i class="fa-solid fa-ruler-combined fa-xl text-primary"></i>
+                            </td>
+                            <td class="text-nowrap">
+                                Area (km<sup>2</sup>)
+                            </td>
+                            <td id="countryAreaInSqKm" class="text-end">
+                            </td>
+                        </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
+        </div>
+
+            <!-- News Modal -->
+
+            <div id="newsModal" class="modal fade" data-bs-backdrop="false" tabindex="-2" aria-labelledby="newsModalLabel">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-content shadow">
+
+                    <div class="modal-header bg-primary bg-gradient text-white">
+                        <h5 class="modal-title" id="newsModalLabel"><i class="fa-solid fa-newspaper fa-xl me-2"></i>Top News</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> 
+
+                    <div class="modal-body" id="newsModalBody">
+
+                        <!-- Article 1 -->          
+                    <table class="table table-borderless">
+                        <tr>
+                            <td rowspan="2" width="50%" >
+                                <img id="article1Image" class="img-fluid rounded news-image" src="" alt="News Image">
+                            </td>
+                            <td id="article1">
+                                <h6 class="mb-2 fw-bold" id="article1Title"></h6>
+                                <p class="lead fs-6 text-black" target="_blank" id="article1Description"></p>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="align-bottom pb-0">
+                                <a href="" id="article1Link" class="fw-light fs-6 mb-1" target="_blank">Full article</a>
+                            </td>            
+                        </tr>
+                    </table>
+                    <hr>
+
+                    <!-- Article 2 -->
+                    <table class="table table-borderless mb-0">       
+                        <tr>
+                            <td rowspan="2" width="50%">
+                                <img id="article2Image" class="img-fluid rounded news-image" src="" alt="News Image">
+                            </td>
+                            <td id="article2">
+                                <h6 class="mb-2 fw-bold" id="article2Title"></h6>
+                                <p id="article2Description" class="lead fs-6 text-black" target="_blank"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-bottom pb-0">
+                                <a href="" id="article2Link" class="fw-light fs-6 mb-1" target="_blank">Full article</a>
+                            </td>            
+                        </tr>
+                    </table> 
+                    <hr>
+                    
+                    <!-- Article 3 -->
+                    <table class="table table-borderless mb-0" >       
+                        <tr>
+                            <td rowspan="2" width="50%">
+                                <img id="article3Image" class="img-fluid rounded news-image" src="" alt="News Image">
+                            </td>
+                            <td id="article3">
+                                <h6 class="mb-2 fw-bold" id="article3Title"></h6>
+                                <p id="article3Description" class="lead fs-6 text-black" target="_blank"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-bottom pb-0">
+                                <a href="" id="article3Link" class="fw-light fs-6 mb-1" target="_blank">Full article</a>
+                            </td>            
+                        </tr>
+                    </table>         
+                    <hr>
+                    
+                    <!-- Article 4 -->
+                    <table class="table table-borderless mb-0" >       
+                        <tr>
+                            <td rowspan="2" width="50%">
+                                <img id="article4Image" class="img-fluid rounded news-image" src="" alt="News Image">
+                            </td>
+                            <td id="article4">
+                                <h6 class="mb-2 fw-bold" id="article4Title"></h6>
+                                <p id="article4Description" class="lead fs-6 text-black" target="_blank"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-bottom pb-0">
+                                <a href="" id="article4Link" class="fw-light fs-6 mb-1" target="_blank">Full article</a>
+                            </td>            
+                        </tr>          
+                    </table>    
+                    
+                    <!-- Article 5-->
+                    <table class="table table-borderless mb-0" >       
+                    <tr>
+                        <td rowspan="2" width="50%">
+                            <img id="article5Image" class="img-fluid rounded news-image" src="" alt="News Image">
+                        </td>
+                        <td id="article5">
+                            <h6 class="mb-2 fw-bold" id="article5Title"></h6>
+                            <p id="article5Description" class="lead fs-6 text-black" target="_blank"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-bottom pb-0">
+                            <a href="" id="article5Link" class="fw-light fs-6 mb-1" target="_blank">Full article</a>
+                        </td>            
+                    </tr>          
+                </table>    
+            </div>
+                
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>          
+</div>
 
 <!-- Exchange Rate Modal -->
     
     <div class="modal fade" id="exchangeRateModal" tabindex="-1" role="dialog" aria-labelledby="exchangeRateModalLabel"
     aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exchangeRateModalLabel">Exchange Rate Information</h5>
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h5 class="modal-title" id="exchangeRateModalLabel"><i class="fa-solid fa-coins fa-xl me-2"></i>Exchange Rate Information</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="exchangeRateModalBody">
                     <div class="form-group">
-                            <label for="fromCurrencySelect">Select currency to exchange from:</label>
+                        <label for="amountToExchange">From <span id="currencyFrom"></span></label>
+                        <input type="number" class="form-control" id="amountToExchange"  value="1" min="1" step="1">
+                    </div>
+                    <div class="form-group">
+                            <label for="fromCurrencySelect">Convert to:</label>
                             <select class="form-select " id="fromCurrencySelect"></select>
                     </div>
-                    <!-- Display the exchange rate -->
-                    <div class="fs-6 text-small fst-italic mt-3 mb-3" id="selectedExchangeRate"></div>
-                    <div class="form-group">
-                        <!-- Dropdown for "Select Currency to Exchange To" -->
-                        <label for="toCurrencySelect">Select Currency to Exchange To:</label>
-                        <select class="form-select" id="toCurrencySelect"></select>
-                    </div>
-                    <div class="form-group mt-3">
-                        <label for="amountToExchange">Amount to Exchange:</label>
-                        <input type="number" class="form-control" id="amountToExchange" placeholder="Enter amount">
-                    </div>
-                    <button type="button" class="btn btn-primary mt-2" id="calculateButton">Calculate</button>
-                    <div class="fw-bold fs-6 text-success text-uppercase mt-3" id="exchangeResult" ></div>
+
+                    
+                    <div class="fw-bold fs-6 text-primary text-uppercase mt-3" id="exchangeResult" ></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
-
-            <!-- News Modal -->
-            <div class="modal fade" id="newsModal" tabindex="-1" role="dialog" aria-labelledby="newsModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="newsModalLabel">News Information</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" id="newsModalBody">
-                            <!-- Article 1 -->
-                            <div class="mb-3" id="article1">
-                                <h6 class="mb-2 fw-bold" id="article1Title"></h6>
-                                <p class="text-muted" id="article1Description"></p><br>
-                            </div>
-                            <!-- Article 2 -->
-                            <div class="mb-3" id="article2">
-                                <h6 class="mb-2 fw-bold" id="article2Title"></h6>
-                                <p class="text-muted" id="article2Description"></p><br>
-                            </div>
-                            <!-- Article 3 -->
-                            <div class="mb-3" id="article3">
-                                <h6 class="mb-2 fw-bold" id="article3Title"></h6>
-                                <p class="text-muted" id="article3Description"></p><br>
-                            </div>
-                            <!-- Article 4 -->
-                            <div class="mb-3" id="article4">
-                                <h6 class="mb-2 fw-bold" id="article4Title"></h6>
-                                <p class="text-muted" id="article4Description"></p><br>
-                            </div>
-                            <!-- Article 5 -->
-                            <div class="mb-3" id="article5">
-                                <h6 class="mb-2 fw-bold" id="article5Title"></h6>
-                                <p class="text-muted" id="article5Description"></p><br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Wikimedia Modal -->
-            <div class="modal fade" id="wikimediaModal" tabindex="-1" role="dialog" aria-labelledby="wikimediaModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="wikimediaModalLabel">Wikimedia Information</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div id="wikimediaModal" class="modal fade" data-bs-backdrop="false" tabindex="-1" aria-labelledby="wikimediaModalLabel">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-content shadow">
+
+                    <div class="modal-header bg-primary bg-gradient text-white">
+                        <h5 class="modal-title" id="wikimediaModalLabel"><i class="fa-solid fa-newspaper fa-xl me-2"></i>Wikimedia Information</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> 
+
+                    <div class="modal-body" id="wikimediaModalBody">
+                        <!-- Article 1 -->
+
+                        <div class="mb-3 fw-bold" id="wikimediaArticle1">
+                            <p class="mb-2 fs-5" id="wikimediaArticle1Title"></p>
+                            
+                            <p class="lead fs-6 text-black" id="wikimediaArticle1Summary"></p><br>
+                            <p class="mb-4" >Source: <a href="" target="_new" id="wikimediaArticle1Url"></a></p>
                         </div>
-                        <div class="modal-body" id="wikimediaModalBody">
-                            <!-- Article 1 -->
-                            <div class="mb-3" id="wikimediaArticle1">
-                                <p><strong id="wikimediaArticle1Title"></strong></p>
-                                <p class="text-muted" id="wikimediaArticle1Summary"></p><br>
-                                <p>Source: <a href="" target="_new" id="wikimediaArticle1Url"></a></p>
-                            </div>
-                            <!-- Article 2 -->
-                            <div class="mb-3" id="wikimediaArticle2">
-                                <p><strong id="wikimediaArticle2Title"></strong></p>
-                                <p class="text-muted" id="wikimediaArticle2Summary"></p><br>
-                                <p>Source: <a href="" target="_new" id="wikimediaArticle2Url"></a></p>
-                            </div>
-                            <!-- Article 3 -->
-                            <div class="mb-3" id="wikimediaArticle3">
-                                <p><strong id="wikimediaArticle3Title"></strong></p>
-                                <p class="text-muted" id="wikimediaArticle3Summary"></p><br>
-                                <p>Source: <a href="" target="_new" id="wikimediaArticle3Url"></a></p>
-                            </div>
+                        <!-- Article 2 -->
+                        <div class="mb-3 fw-bold" id="wikimediaArticle2">
+                            <p class="mb-2 fs-5" id="wikimediaArticle2Title"></p>
+                            <p class="lead fs-6 text-black" id="wikimediaArticle2Summary"></p><br>
+                            <p class="mb-4">Source: <a href="" target="_new" id="wikimediaArticle2Url"></a></p>
+                        </div>
+                        <!-- Article 3 -->
+                        <div class="mb-3 fw-bold" id="wikimediaArticle3">
+                            <p class="mb-2 fs-5" id="wikimediaArticle3Title"></p>
+                            <p class="lead fs-6 text-black" id="wikimediaArticle3Summary"></p><br>
+                            <p class="mb-4">Source: <a href="" target="_new" id="wikimediaArticle3Url"></a></p>
                         </div>
                     </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-dismiss="modal">Close</button>
                 </div>
-            </div>
+            </div>          
+        </div>
+</div>
 
 
             <!-- Weather Modal -->
-            <div class="modal fade" id="weatherModal" tabindex="-1" role="dialog" aria-labelledby="weatherModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="weatherModalLabel">Weather Information</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal fade" id="weatherModal" tabindex="-1" aria-labelledby="weatherModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary bg-gradient text-white"><i class="fa-solid fa-cloud fa-xl me-2"></i>
+                    <h5 class="modal-title" id="weatherModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                        <!-- Today's Weather -->
+                        <div class="col text-center">
+                            <h5>Today <span id="todayDate" ></span></h5>
+                            <img id="todayIcon" src="" alt="Weather Icon" class="weather-icon weather-icon-large">
+                            <p id="todayWeatherDescription"  class="fw-bold mb-2"></p>
+                            <p class="fs-5 text-primary">Feels like: <span id="todayFeelsLike"></span>°C</p>
+                            <p>Max Temp: <span id="todayMaxTemp"></span>°C</p>
+                            <p class="text-black-50">Min Temp: <span id="todayMinTemp"></span>°C</p>
                         </div>
-                        <div class="modal-body" id="newsModalBody">
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Location</strong></td>
-                                        <td id="weatherPlaceName"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Temperature (Celsius)</strong></td>
-                                        <td id="weatherTemperatureCelsius"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Temperature (Fahrenheit)</strong></td>
-                                        <td id="weatherTemperatureFahrenheit"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Description</strong></td>
-                                        <td id="weatherDescription"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Wind Speed</strong></td>
-                                        <td id="weatherWindSpeed"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Humidity</strong></td>
-                                        <td id="weatherHumidity"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <!--  Tomorrow's Weather -->
+                        <div class="col text-center">
+                            <h5> <span id="tomorrowDate"></span></h5>
+                            <img id="tomorrowIcon" src="" alt="Weather Icon" class="weather-icon weather-icon-large">
+                            <p id="tomorrowWeatherDescription"   class="fw-bold mb-2"></p>
+                            <p class="fs-5 text-primary">Feels like: <span id="tomorrowFeelsLike"></span>°C</p>
+                            <p>Max Temp: <span id="tomorrowMaxTemp"></span>°C</p>
+                            <p class="text-black-50">Min Temp: <span id="tomorrowMinTemp"></span>°C</p>
+                        </div>
+                        <!-- Day After Tomorrow Weather -->
+                        <div class="col text-center">
+                            <h5><span id="dayAfterDate"></span></h5>
+                            <img id="dayAfterIcon" src="" alt="Weather Icon" class="weather-icon weather-icon-large">
+                            <p id="dayAfterWeatherDescription"  class="fw-bold mb-2" ></p>
+                            <p class="fs-5 text-primary">Feels like: <span id="dayAfterFeelsLike"></span>°C</p>
+                            <p>Max Temp: <span id="dayAfterMaxTemp"></span>°C</p>
+                            <p class="text-black-50">Min Temp: <span id="dayAfterMinTemp"></span>°C</p>
+                        </div>
                         </div>
                     </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
                 </div>
             </div>
 
             <!-- How To Use Map -->
-            <div class="modal fade" id="informationModal" tabindex="-1" role="dialog" aria-labelledby="informationModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="informationModalLabel">How to Use the Map:</h5>
+            <div id="howToModal" class="modal fade" data-bs-backdrop="false" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-content shadow">
+                        <div class="modal-header bg-primary bg-gradient text-white">
+                            <h5 class="modal-title"><i class="fa-solid fa-circle-info fa-xl me-2"></i>How To Use The Map</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body" id="informationModalBody">
 
-                            <p><strong>1. Country Selection:</strong> Choose a county by clicking on the country select drop-down menu.</p>
-                            
-                            <p><strong>2. Exploring Locations:</strong> Double click/tap anywhere on the map to select that country and receive it's information.</p>
-                            <br>
-                            
-                            <h4>Right Side Buttons:</h4>
-                            
-                            <ul>
-                                <li>
-                                    <strong>Layers Icon:</strong>
-                                    <ul>
-                                        <li>Adjust the map layout by selecting different visual options.</li>
-                                        <li>Modify the markers displayed in the selected country area by toggling the desired markers.</li>
+                        <div class="modal-body">
+                            <tr class="table">
+
+                                <tr class="text-nowrap col">
+                                        <i class="fa-xl text-primary"></i>
+                                    </tr>
+                                    <tr class="text-nowrap">
+                                        <p class="fw-bold fs-5 mb-2" > Country Selection: </p>
+                                    </tr>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">Choose a county by clicking on the country select drop-down menu.</li>
                                     </ul>
-                                </li>
-                            </ul>
-                            <br>
-                            
-                            <h4>Left Side Buttons:</h4>
-                            
-                            <ul>
-                                <li><strong>Zoom In/Out:</strong> Use the "+" and "-" buttons to zoom in or out.</li>
-                                <li><strong>Globe Icon:</strong> Explore the demographics of the selected country.</li>
-                                <li><strong>News Button:</strong> Access available news for the country. (The button is hidden if no news is available.)</li>
-                                <li><strong>"W" Icon:</strong> Retrieve Wikipedia information about the selected country.</li>
-                                <li><strong>Arrows Button:</strong> Retrieve currency exchange information.</li>
-                                <ul>
-                                    <li><strong>Select Currencies:</strong> Choose your source currency and the currency you wish to exchange it for.</li>
-                                    <li><strong>Live Exchange Rate: </strong>Upon selecting your currencies, instantly view the up-to-date live exchange rate.</li>
-                                    <li><strong>Enter Amount:</strong> Input the specific amount you intend to exchange.</li>
-                                    <li><strong>Calculate Result: </strong>Click the "Calculate" button to obtain the calculated exchange result effortlessly.</li>
 
+                                    <tr class="text-nowrap col">
+                                        <i class="fa-xl text-primary"></i>
+                                    </tr>
+                                    <tr class="text-nowrap">
+                                        <p class="fw-bold fs-5 mt-3 mb-2" > Exploring Locations: </p>
+                                    </tr>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">Double click/tap anywhere on the map to select that country and receive it's information.</li>
+                                    </ul>
+                                    
+                                <tr class="text-nowrap">
+                                    <p class="fw-bold fs-5 mt-3 mb-3" >Right Side Buttons: </p>
+                                </tr>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Adjust the map layout by selecting different visual options.</li>
+                                    <li class="list-group-item mb-3">Modify the markers displayed in the selected country area by toggling the desired markers.</li>
                                 </ul>
-                            </li>
-                                <li><strong>Sun Icon:</strong> Access detailed weather information.</li>
+                                </tr>
+
+                            <td class="text-nowrap">
+                                <p class="fw-bold fs-5 mt-2 mb-3" >Left Side Buttons: </p>
+                                </td>   
+                                <td>
+                                    <p class="fw-bold fs-6" >Zoom In/Out: </p>
+                                    </td>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Zoom In/Out: Use the "+" and "-" buttons to zoom in or out.</li>
+                                </ul>
+                                <td class="text-nowrap">
+                                    <p class="fw-bold fs-6" >Globe Icon:</p>
+                                    </td>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Explore the demographics of the selected country.</li>
+                                </ul>
+                                <td class="text-nowrap">
+                                    <p class="fw-bold fs-6" >News Button:</p>
+                                    </td>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Access available news for the country. (The button is hidden if no news is available.)</li>
+                                </ul>
+                                <td class="text-nowrap">
+                                    <p class="fw-bold fs-6" >"W" Icon: </p>
+                                    </td>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Retrieve Wikipedia information about the selected country.</li>
+                                </ul>
+                                <td class="text-nowrap">
+                                    <p class="fw-bold fs-6" >Arrows Button: </p>
+                                    </td>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Retrieve currency exchange information.</li>
+                                </ul>
+                        </td>
+                        <td class="text-nowrap">
+                            <p class="fw-bold fs-5 mt-3 mb-2" >Currency Exchange: </p>
+                            </td>   
+                            <td>
+                                <p class="fw-bold fs-6" >Enter Amount: </p>
+                                </td>
+                            <ul class="list-group">
+                                <li class="list-group-item">Input the specific amount you intend to exchange.</li>
                             </ul>
+                            <td class="text-nowrap">
+                                <p class="fw-bold fs-6" >Select Currency:</p>
+                                </td>
+                            <ul class="list-group">
+                                <li class="list-group-item">Choose the currency you wish to exchange your funds for.The Result exchange result will appear at the bottom of the window.</li>
+                            </ul>
+                    </td>
+
+                    <tr class="text-nowrap">
+                        <p class="fw-bold fs-5 mt-3 mb-2" >Sun Icon: </p>
+                    </tr>
+                    <ul class="list-group">
+                        <li class="list-group-item">Access detailed weather information.</li>
+                    </ul>
+                        </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
+
                 </div>
             </div>
-
         </main>
-        
-        <!-- FOOTER -->
-        <footer class="container-fluid text-center bg-dark p-3 fixed-bottom">
-            <div class="container text-light">
-                <p>
-                    Maps provided by: ©
-                    <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, © <a href="https://opentopomap.org">OpenTopoMap</a>, and ©
-                    <a href="https://www.google.com/permissions/geoguidelines/attr-guide.html">Google Maps</a>.
-                </p>
-            </div>
-        </footer>
 
-        <script src="javascript/jquery-3.7.1.min.js"></script>
-        <script src="resources/leaflet/leaflet.js"></script>
-        <script src="resources/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
-        <script src="resources/Leaflet.EasyButton-master/src/easy-button.js"></script>
-        <script src="node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-        <script src="resources/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
-        <script src="javascript/main.js"></script>
+        <script type="text/javascript" src="javascript/jquery-3.7.1.min.js"></script>
+        <script type="text/javascript" src="resources/leaflet/leaflet.js"></script>
+        <script type="text/javascript" src="resources/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
+        <script type="text/javascript" src="resources/Leaflet.EasyButton-master/src/easy-button.js"></script>
+        <script type="text/javascript" src="node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+        <script type="text/javascript" src="resources/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="javascript/date.js"></script>
+        <script type="text/javascript" src="node_modules/numeral/min/numeral.min.js"></script>
+        <script type="text/javascript" src="javascript/main.js"></script>
     </body>
-
 </html>

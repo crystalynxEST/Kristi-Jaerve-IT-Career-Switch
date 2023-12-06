@@ -1,6 +1,95 @@
 /* Bootstrap classes for styling */
 
 /* Leaflet map container */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#pre-load:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid #f2f2f2;
+  border-top: 6px solid #56829e ;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: animate-preloader 1s linear infinite;
+  animation: animate-preloader 1s linear infinite;
+}
+
+@-webkit-keyframes animate-preloader {
+  0% {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  }
+  100% {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+  }
+  }
+  @keyframes animate-preloader {
+  0% {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  }
+  100% {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+  }
+}
+
+.fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 1s, opacity 1s linear;
+}
+
+/* Hide nav bar */
+.navbar {
+  display: none;
+}
+
+select#countrySelect {
+  width: 200px;
+  margin: 0 auto;
+}
+
+select#countrySelect {
+  position: absolute;
+  top: 10px; 
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; 
+  width: 200px;
+  margin: 0 auto;
+}
+
+#countrySelect {
+  width: auto; /* Adjust as needed */
+  margin-right: 10px; /* Space between select and button */
+}
+
+#selectContainer {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
 
 .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
   --bs-gutter-x: 0rem;
@@ -11,16 +100,13 @@
   margin-right: auto;
   margin-left: auto;
 }
-#map-container {
-  height: calc(100vh - 56px);
-  margin-top: 56px !important;
+#map {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
   padding: 0;
 }
 
-#map {
-  height: 100%;
-  width: 100%;
-}
 .bg-light {
   --bs-bg-opacity: 50%;
 }
@@ -47,14 +133,12 @@ p {
   z-index: 9999; /* Ensure it's above other content */
 }
 
-/* Adjust the spinner styles as needed */
+/*spinner */
 .spinner-border {
   width: 3rem;
   height: 3rem;
 }
-.navbar-brand-gazetteer {
-  padding-left: 20px; /* Adjust the padding as needed */
-}
+
 /* Leaflet marker clusters styling */
 .marker-cluster-small {
   background-color: rgba(181, 226, 140, 0.7); /* Customize cluster color */
@@ -70,12 +154,12 @@ p {
 
 /* Leaflet default marker icon styling */
 .a leaflet-marker-icon {
-  width: 25px; /* Adjust marker width */
-  height: 41px; /* Adjust marker height */
+  width: 25px; 
+  height: 41px; 
   margin-left: -12px; /* Center the marker horizontally */
   margin-top: -41px; /* Center the marker vertically */
-  background-image: url('../resources/leaflet/images/marker-icon.png'); /* Use your custom marker image */
-  background-size: contain; /* Ensure the marker image fits within the specified width and height */
+  background-image: url('../resources/leaflet/images/marker-icon.png'); 
+  background-size: contain; /* marker image fits within the specific width and height */
   background-repeat: no-repeat; /* Prevent the marker image from repeating */
   cursor: pointer; /* Set cursor to pointer on hover */
 }
@@ -102,7 +186,7 @@ p {
 }
 
 /* easy button css */
-/* Center the demographicsBtn icon */
+/* Center the icons */
 .fa-globe::before {
   line-height: 1.5;
 }
@@ -120,6 +204,9 @@ p {
 }
 
 .fa-sun:before {
+  line-height: 1.5;
+}
+.fa-circle-info:before {
   line-height: 1.5;
 }
 
@@ -145,7 +232,14 @@ p {
   padding: 3px 5px;
   cursor: pointer;
 }
-.leaflet-control-container { 
-  position: relative; 
-  z-index: 1000; 
+
+/* News images*/
+.news-image {
+  height: 150px; 
+  object-fit: cover; /* Maintain aspect ratio */
+}
+
+.weather-icon-large {
+  width: 50px; /* or any size you prefer */
+  height: 50px; /* keep the same value as width to maintain aspect ratio */
 }
