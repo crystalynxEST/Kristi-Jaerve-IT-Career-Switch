@@ -1,15 +1,7 @@
 <?php
 
-	// example use from browser
-	// http://localhost/companydirectory/libs/php/getAllDepartments.php
-
-	// remove next two lines for production	
-	
-	ini_set('display_errors', 'On');
-	error_reporting(E_ALL);
-
 	$executionStartTime = microtime(true);
-
+//this includes the login details
 	include("config.php");
 
 	header('Content-Type: application/json; charset=UTF-8');
@@ -32,13 +24,17 @@
 
 	}	
 
-	// SQL does not accept parameters and so is not prepared
+	$firstName = trim($_POST['firstname']);
+	$lastName = trim($_POST['lastname']);
+	$email = trim($_POST['email']);
+	$jobTitle = trim($_POST['jobTitle']);
+	$departmentID = $_POST['departmentID'];
 
-	$query = 'SELECT d.id, d.name, d.locationID, l.name as location_name FROM department d LEFT JOIN location l ON (l.id = d.locationID) order by d.name, location_name asc';
-
-	$result = $conn->query($query);
+	$query = $conn->prepare('INSERT personnel SET firstName=?, lastName=?, email=?, jobTitle = ?, departmentID=?');
+	$query->bind_param('ssssi', $firstName, $lastName, $email, $jobTitle, $departmentID);
+	$id = $query->execute();
 	
-	if (!$result) {
+	if (false === $query) {
 
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
@@ -52,20 +48,12 @@
 		exit;
 
 	}
-   
-   	$data = [];
-
-	while ($row = mysqli_fetch_assoc($result)) {
-
-		array_push($data, $row);
-
-	}
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-	$output['data'] = $data;
+	$output['data'] = [$_REQUEST['param1']];
 	
 	mysqli_close($conn);
 
