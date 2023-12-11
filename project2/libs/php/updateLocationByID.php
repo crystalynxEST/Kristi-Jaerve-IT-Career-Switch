@@ -1,8 +1,8 @@
 <?php
 
 	//REMOVE FOR PRODUCTION
-	ini_set('display_errors', 1);
-	error_reporting(E_ALL);
+	// ini_set('display_errors', 1);
+	// error_reporting(E_ALL);
 
 	$executionStartTime = microtime(true);
 
@@ -41,7 +41,6 @@
 		exit;
 	}
 	
-
 	$query = $conn->prepare('UPDATE location SET name=? WHERE id=?');
 
 	// Check for SQL preparation error
@@ -89,4 +88,3 @@
 
 	mysqli_close($conn);
 	echo json_encode($output);
-?>

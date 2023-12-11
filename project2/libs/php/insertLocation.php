@@ -1,8 +1,8 @@
 <?php
 
 	//REMOVE FOR PRODUCTION
-	ini_set('display_errors', 1);
-	error_reporting(E_ALL);
+	// ini_set('display_errors', 1);
+	// error_reporting(E_ALL);
 
 	$executionStartTime = microtime(true);
 
@@ -27,30 +27,31 @@
 		exit;
 	}	
 	
+
+
 	$name = htmlspecialchars(trim($_POST['name']));
 
-	    // Input validation
-		if (!$name) {
-			$output['status']['code'] = "400";
-			$output['status']['name'] = "invalid input";
-			$output['status']['description'] = "Invalid or missing location name";  
-			$output['data'] = [];
-	
-			mysqli_close($conn);
-	
-			echo json_encode($output);
-	
-			exit;
-		}
+	// Input validation
+	if (!$name) {
+		$output['status']['code'] = "400";
+		$output['status']['name'] = "invalid input";
+		$output['status']['description'] = "Invalid or missing location name";  
+		$output['data'] = [];
+
+		mysqli_close($conn);
+
+		echo json_encode($output);
+
+		exit;
+	}
 	
 	// Query to check if departments exists with this location
 	$checkQuery = $conn->prepare('SELECT COUNT(*) FROM `location` WHERE name = ?');
 	$checkQuery->bind_param("s", $name);
 	$checkQuery->execute();
-
-	$result = $checkQuery->bind_result($count);
-
+	$checkQuery->bind_result($count);
 	$checkQuery->fetch();
+	$checkQuery->free_result();
 		
 	if (false === $checkQuery) {
 
@@ -79,12 +80,12 @@
 		echo json_encode($output); 
 
 		exit();
-
 	} else {
 	
 		$query = $conn->prepare('INSERT INTO location (name) VALUES (?)');
 		$query->bind_param('s', $name);
 		
+
 		$id = $query->execute();
 		
 		if (false === $query) {

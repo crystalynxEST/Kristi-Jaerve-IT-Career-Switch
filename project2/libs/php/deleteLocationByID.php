@@ -2,8 +2,8 @@
 
 	// remove next two lines for production
 	
-	ini_set('display_errors', 'On');
-	error_reporting(E_ALL);
+	// ini_set('display_errors', 'On');
+	// error_reporting(E_ALL);
 
 	$executionStartTime = microtime(true);
 
@@ -33,9 +33,9 @@
 	$checkQuery->bind_param("i", $_POST['id']);
 	$checkQuery->execute();
 
-	$result = $checkQuery->bind_result($count);
-
-	$checkQuery->fetch();
+    $checkQuery->store_result(); // Store the result
+    $checkQuery->bind_result($count);
+    $checkQuery->fetch();
 	
 	if (false === $checkQuery) {
 
@@ -51,6 +51,9 @@
 		exit;
 	}
 
+	$checkQuery->free_result(); // Free the result
+    $checkQuery->close(); // Close the statement for the "Commands out of sync" network response.
+
 	if ($count > 0) {
 
 		$output['status']['code'] = "401";
@@ -64,7 +67,6 @@
 		echo json_encode($output); 
 
 		exit();
-
 	} else {
 	
 		// Delete location query

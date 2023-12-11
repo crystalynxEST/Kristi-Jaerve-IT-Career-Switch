@@ -5,8 +5,8 @@
 
 	// remove next two lines for production
 	
-	ini_set('display_errors', 'On');
-	error_reporting(E_ALL);
+	// ini_set('display_errors', 'On');
+	// error_reporting(E_ALL);
 
 	$executionStartTime = microtime(true);
 
@@ -59,7 +59,6 @@
 
 		array_push($personnel, $row);
 	}
-
 	// second query - does not accept parameters and so is not prepared
 
 	$query = 'SELECT id, name from department ORDER BY name';
@@ -79,7 +78,6 @@
 
 		exit;
 	}
-
 	$department = [];
 
 	while ($row = mysqli_fetch_assoc($result)) {

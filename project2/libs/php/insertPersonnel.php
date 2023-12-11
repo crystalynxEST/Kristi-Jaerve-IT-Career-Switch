@@ -1,8 +1,8 @@
 <?php
 
 	//REMOVE FOR PRODUCTION
-	ini_set('display_errors', 1);
-	error_reporting(E_ALL);
+	// ini_set('display_errors', 1);
+	// error_reporting(E_ALL);
 	
 	$executionStartTime = microtime(true);
 
@@ -61,7 +61,7 @@
 			exit;
 		}
 
-	// Query to check if personnel exists with the firstName and lastName
+	// Query to check if personnel exists with this firstName and lastName
 	$checkQuery = $conn->prepare('SELECT COUNT(*) FROM `personnel` WHERE `firstName` = ? AND `lastName` = ?');
 	$checkQuery->bind_param("ss", $firstName, $lastName);
 	$checkQuery->execute();
@@ -98,7 +98,6 @@
 		echo json_encode($output); 
 
 		exit();
-
 	} else {
 
 	$query = $conn->prepare('INSERT INTO personnel (firstName, lastName, email, jobTitle, departmentID) VALUES (?, ?, ?, ?, ?)');
@@ -134,5 +133,5 @@
 	mysqli_close($conn);
 
 	echo json_encode($output); 
-}
+	}
 ?>

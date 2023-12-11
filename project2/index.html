@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-utilities.min.css" />
         <link rel="stylesheet" href="libs/css/fontawesome-free-6.2.0-web/css/all.min.css" />
-        <link rel="stylesheet" href="libs/css/fontawesome-free-6.2.0-web/" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="libs/css/style.css" />
 
     </head>
@@ -29,14 +29,12 @@
                 <h1>Company Directory</h1>
                 <hr>
             </header>
-            
-            <!-- ---------------------- HEADER BUTTONS -------------------------- -->
+
             <div class="appHeader">
-            
                 <div class="row">
 
                     <div class="col-md-3">
-                        <input id="searchInp" class="form-control mb-3" placeholder="Search">
+                        <input id="searchInp" class="form-control mb-3" placeholder="Search Personnel">
                     </div>
 
                         <div class="col-md-3">
@@ -59,9 +57,7 @@
                             </button>
 
                         </div>
-
                     </div>
-
                 </div>
 
                 <!-- ----------------------NAV TABS -------------------------- -->
@@ -91,28 +87,30 @@
                                 class="d-none d-sm-block">Locations</span>
                         </button>
                     </li>
-
                 </ul>
-
             </div>
 
             <!-- ----------------------PERSONNEL TAB -------------------------- -->
             <div class="tab-content bg-white">
                 <div class="tab-pane show active" id="personnel-tab-pane" role="tabpanel" aria-labelledby="home-tab"
                     tabindex="0">
+                    <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
-                            <th>Last Name, First Name</th>
-                            <th>Job Title</th>
-                            <th>Department</th>
-                            <th>Location</th>
-                            <th></th>
+                            <tr>
+                                <th class="d-md-table-cell">Last Name, First Name</th>
+                                <th>Job Title</th>
+                                <th>Department</th>
+                                <th>Location</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody id="personnelTableBody">
                         </tbody>
                     </table>
-                    <ul class="pagination" id="pagination"></ul>
                 </div>
+                <ul class="pagination" id="pagination"></ul>
+            </div>
 
                 <!-- ----------------------DEPARTMENTS TAB -------------------------- -->
                 <div class="tab-pane" id="departments-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
@@ -140,18 +138,13 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
 
             <!-- ----------------------FOOTER -------------------------- -->
             <footer class="border-top text-center fw-bold">
-
                 <p class="fw-light my-3">Company Directory version 1.0</p>
-
             </footer>
-
         </section>
-       
 
 
         <!-- ---------------------- PERSONNEL -------------------------- -->
@@ -162,7 +155,6 @@
             <!--   that the header and footer are always on display by making the body scroll -->
 
             <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
-
                 <div class="modal-content shadow">
 
                     <div class="modal-header bg-primary bg-gradient text-white">
@@ -177,38 +169,42 @@
 
                             <input type="hidden" id="addPersonnelEmployeeID">
 
-                            <div class="form-floating mb-3">
+                            <div class="form-floating mb-3 form-group">
                                 <input type="text" class="form-control" id="addPersonnelFirstName"
                                     placeholder="First name" required>
                                 <label for="addPersonnelFirstName">First name</label>
+                                <div id="addPersonnelFirstName-error" class="text-danger"></div>
                             </div>
 
-                            <div class="form-floating mb-3">
+                            <div class="form-floating mb-3 form-group">
                                 <input type="text" class="form-control" id="addPersonnelLastName"
                                     placeholder="Last name" required>
                                 <label for="addPersonnelLastName">Last name</label>
+                                <div id="addPersonnelLastName-error" class="text-danger"></div>
                             </div>
 
-                            <div class="form-floating mb-3">
+                            <div class="form-floating mb-3 form-group">
                                 <input type="text" class="form-control" id="addPersonnelJobTitle"
                                     placeholder="Job title" required>
                                 <label for="addPersonnelJobTitle">Job Title</label>
+                                <div id="addPersonnelJobTitle-error" class="text-danger"></div>
                             </div>
 
-                            <div class="form-floating mb-3">
+                            <div class="form-floating mb-3 form-group">
                                 <input type="email" class="form-control" id="addPersonnelEmailAddress"
                                     placeholder="Email address" required>
                                 <label for="addPersonnelEmailAddress">Email Address</label>
+                                <div id="addPersonnelEmailAddress-error" class="text-danger"></div>
                             </div>
 
-                            <div class="form-floating">
+                            <div class="form-floating form-group">
                                 <select class="form-select" id="addPersonnelDepartment" placeholder="Department">
                                 </select>
                                 <label for="addPersonnelDepartment">Department</label>
+                                <div id="addPersonnelDepartment-error" class="text-danger"></div>
                             </div>
 
                         </form>
-
                     </div>
 
                     <div class="modal-footer">
@@ -217,11 +213,8 @@
                         <button type="button" class="btn btn-outline-primary btn-sm myBtn"
                             data-bs-dismiss="modal">CANCEL</button>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
 
         <!-- EDIT -->
@@ -232,7 +225,6 @@
         <!--   that the header and footer are always on display by making the body scroll -->
 
         <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
-
             <div class="modal-content shadow">
 
                 <div class="modal-header bg-primary bg-gradient text-white">
@@ -242,7 +234,6 @@
                 </div>
 
                 <div class="modal-body">
-
                     <form id="editPersonnelForm">
 
                         <input type="hidden" id="editPersonnelEmployeeID">
@@ -251,34 +242,37 @@
                             <input type="text" class="form-control" id="editPersonnelFirstName"
                                 placeholder="First name" required>
                             <label for="editPersonnelFirstName">First name</label>
+                            <div id="editPersonnelFirstName-error" class="text-danger"></div>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="editPersonnelLastName"
                                 placeholder="Last name" required>
                             <label for="editPersonnelLastName">Last name</label>
+                            <div id="editPersonnelLastName-error" class="text-danger"></div>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="editPersonnelJobTitle"
                                 placeholder="Job title" required>
                             <label for="editPersonnelJobTitle">Job Title</label>
+                            <div id="editPersonnelJobTitle-error" class="text-danger"></div>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="editPersonnelEmailAddress"
                                 placeholder="Email address" required>
                             <label for="editPersonnelEmailAddress">Email Address</label>
+                            <div id="editPersonnelEmailAddress-error" class="text-danger"></div>
                         </div>
 
                         <div class="form-floating">
                             <select class="form-select" id="editPersonnelDepartment" placeholder="Department">
                             </select>
                             <label for="editPersonnelDepartment">Department</label>
+                            <div id="editPersonnelDepartment-error" class="text-danger"></div>
                         </div>
-
                     </form>
-
                 </div>
 
                 <div class="modal-footer">
@@ -287,11 +281,8 @@
                     <button type="button" class="btn btn-outline-primary btn-sm myBtn"
                         data-bs-dismiss="modal">CANCEL</button>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
 
@@ -299,12 +290,10 @@
 
         <div id="addDepartmentModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false"
             aria-labelledby="addDepartmentModalLabel" aria-hidden="true">
-
             <!--   the last two classes centre the modal and, if the content is too long, ensures  -->
             <!--   that the header and footer are always on display by making the body scroll -->
 
             <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
-
                 <div class="modal-content shadow">
 
                     <div class="modal-header bg-primary bg-gradient text-white">
@@ -314,7 +303,6 @@
                     </div>
 
                     <div class="modal-body">
-
                         <form id="addDepartmentForm">
 
                             <input type="hidden" id="addDepartmentID">
@@ -323,16 +311,16 @@
                                 <input type="text" class="form-control" id="addDepartmentName"
                                     placeholder="Department Name" required>
                                 <label for="addDepartmentName">Department Name </label>
+                                <div id="addDepartmentName-error" class="text-danger"></div>
                             </div>
 
                             <div class="form-floating">
                                 <select class="form-select" id="addLocationID" placeholder="Location">
                                 </select>
                                 <label for="addLocationID">Location</label>
+                                <div id="addLocationID-error" class="text-danger"></div>
                             </div>
-
                         </form>
-
                     </div>
 
                     <div class="modal-footer">
@@ -341,12 +329,10 @@
                         <button type="button" class="btn btn-outline-primary btn-sm myBtn"
                             data-bs-dismiss="modal">CANCEL</button>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
+
 
         <!-- EDIT -->
         <div id="editDepartmentModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false"
@@ -356,7 +342,6 @@
         <!--   that the header and footer are always on display by making the body scroll -->
 
         <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
-
             <div class="modal-content shadow">
 
                 <div class="modal-header bg-primary bg-gradient text-white">
@@ -366,27 +351,24 @@
                 </div>
 
                 <div class="modal-body">
-
                     <form id="editDepartmentForm">
 
                         <input type="hidden" id="editDepartmentID">
 
-
-                        
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="editDepartmentName"
                                 placeholder="First name" required>
                             <label for="editDepartmentName">Department name</label>
+                            <div id="editDepartmentName-error" class="text-danger"></div>
                         </div>
 
                         <div class="form-floating">
                             <select class="form-select" id="editDepartmentLocation" placeholder="Location">
                             </select>
                             <label for="editDepartmentLocation">Location</label>
+                            <div id="editDepartmentLocation-error" class="text-danger"></div>
                         </div>
-
                     </form>
-
                 </div>
 
                 <div class="modal-footer">
@@ -395,11 +377,8 @@
                     <button type="button" class="btn btn-outline-primary btn-sm myBtn"
                         data-bs-dismiss="modal">CANCEL</button>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
         <!-- ------------------- LOCATION --------------------------- -->
@@ -411,7 +390,6 @@
         <!--   that the header and footer are always on display by making the body scroll -->
 
         <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
-
             <div class="modal-content shadow">
 
                 <div class="modal-header bg-primary bg-gradient text-white">
@@ -428,12 +406,11 @@
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="addLocationName"
-                                placeholder="Location" Name" required>
+                                placeholder="Location Name" required>
                             <label for="addLocationName">Location Name </label>
+                            <div id="addLocationName-error" class="text-danger"></div>
                         </div>
-
                     </form>
-
                 </div>
 
                 <div class="modal-footer">
@@ -442,22 +419,17 @@
                     <button type="button" class="btn btn-outline-primary btn-sm myBtn"
                         data-bs-dismiss="modal">CANCEL</button>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
 
 <!-- EDIT -->
 <div id="editLocationModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="editLocationModalLabel" aria-hidden="true">
-
     <!--   the last two classes centre the modal and, if the content is too long, ensures  -->
     <!--   that the header and footer are always on display by making the body scroll -->
 
     <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
-
         <div class="modal-content shadow">
 
             <div class="modal-header bg-primary bg-gradient text-white">
@@ -476,10 +448,9 @@
                         <input type="text" class="form-control" id="editLocation"
                             placeholder="Location" required>
                         <label for="editLocation">Location</label>
+                        <div id="editLocation-error" class="text-danger"></div>
                     </div>
-
                 </form>
-
             </div>
 
             <div class="modal-footer">
@@ -488,42 +459,38 @@
                 <button type="button" class="btn btn-outline-primary btn-sm myBtn"
                     data-bs-dismiss="modal">CANCEL</button>
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 
-<!-- ------------------------- View Personnel ------------------------- -->
+<!-- View Personnel -->
 <div id="viewPersonnelModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="viewPersonnelModalLabel" aria-hidden="true">
 
     <!--   the last two classes centre the modal and, if the content is too long, ensures  -->
     <!--   that the header and footer are always on display by making the body scroll -->
 
-    <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable ">
+        <div class="table-responsive">
 
-        <div class="modal-content shadow">
+            <div class="modal-content shadow">
 
-            <div class="modal-header bg-primary bg-gradient text-white">
-                <h5 class="modal-title"></h5>
-                <button type="button" class="btn-close btn-close-white"  data-bs-toggle="modal"
-                    aria-label="Close"></button>
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close btn-close-white"  data-bs-toggle="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary btn-sm myBtn"
+                        data-bs-dismiss="modal">CLOSE</button>
+                </div>
             </div>
-
-            <div class="modal-body">
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary btn-sm myBtn"
-                    data-bs-dismiss="modal">CLOSE</button>
-            </div>
-
         </div>
-
     </div>
-
 </div>
 
 
@@ -563,7 +530,9 @@
     </div>
 
         <script type="text/javascript" src="libs/javascript/jquery-3.6.0.js"></script>
-        <script text="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script text="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+        <script text="text/javascript" src="node_modules/@popperjs/core/dist/umd/popper.js"></script>
+        
         <script text="text/javascript" src="libs/javascript/main.js"></script>
     </body>
 

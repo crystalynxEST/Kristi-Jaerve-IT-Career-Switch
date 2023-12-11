@@ -1,15 +1,3 @@
-/*FIXME: Personnel: When not choosing a department, should ask to choose a department - Think done?
-TODO: Check a personnel does not already exists when adding a new one; (see insertDepartment.php) - Think done?
-TODO: Validation when adding a location or department, e.g. Department if no location is shown, show a message. - Think done?
-TODO: Validation on personnel, check e-mail address is valid and other fields are entered. - think done?
-TODO: Probably could do with disabling department and location filter when on Locations/Department pane - Maybe gray it out or something like that
-// ABOVE - currently very buggy. Need to work on it.
-TODO: Check responsive joy...
-TODO: htaccess file
-TODO: No error logs on console
-
-
-*/
 $(window).on("load", function () {
   initialiseData();
   if ($("#preloader").length) {
@@ -21,24 +9,25 @@ $(window).on("load", function () {
   }
 });
 
+// Loads all personnel, locations and departments from the database
+// Populate all department and location dropdowns
+
 function initialiseData() {
-  console.log("loading");
 
   getAllPersonnel();
-  populateDepartmentDropdown();
-  populateLocationDropdown();
   getAllLocations();
   getAllDepartments();
+  populateDepartmentDropdown();
+  populateLocationDropdown();
 }
-var pageSize;
+
+// Global variables for personnel, departments and locations
 var allPersonnel;
 var allDepartments;
 var allLocations;
 
-var filterResults;
-var personnelTableBody;
 
-
+// Update Location Dropdown
 function updateLocationDropdown(dropdownSelect, data)
 {
   const selectDropdown = $(dropdownSelect).empty();
@@ -60,9 +49,6 @@ function updateLocationDropdown(dropdownSelect, data)
   });
 }
 
-
-
-// Populates location dropdowns
 function populateLocationDropdown() {
   $.ajax({
     url: "./libs/php/getAllLocations.php",
@@ -78,8 +64,6 @@ function populateLocationDropdown() {
 
         // Add New Department Location dropdown
         updateLocationDropdown("#addLocationID", result.data);
-
-
       } else {
         console.error("Error: Result code is not 200");
       }
@@ -111,6 +95,7 @@ function updateDepartmentDropdown(dropdownSelect, data)
   });
 }
 
+// ------ POPULATE DEPARTMENT DROPDOWN ----------------------
 function populateDepartmentDropdown() {
   $.ajax({
     url: "./libs/php/getAllDepartments.php",
@@ -140,19 +125,6 @@ function populateDepartmentDropdown() {
   });
 }
 
-function populatePersonnelTableWithPagination(data) {
-  populatePersonnelTable(data);
-
-  pageSize = 15;
-  var totalRows = data.length;
-  var totalPages = Math.ceil(totalRows / pageSize);
-
-  addPagination(totalPages);
-
-  showPage(1, pageSize);
-}
-
-
 // ------------------- GET ALL LOCATIONS -------------------
 function getAllPersonnel() {
   $.ajax({
@@ -161,7 +133,6 @@ function getAllPersonnel() {
     dataType: "json",
     success: function (result) {
       allPersonnel = result.data;
-
       populatePersonnelTable(allPersonnel);
     },
     error: function () {
@@ -232,10 +203,10 @@ function populateDepartmentTable(data) {
   data.forEach(function (department) {
     var row =
       "<tr>" +
-      '<td class="align-middle text-nowrap">' +
+      '<td class="align-middle text-nowrap fw-semibold">' +
       department.name +
       "</td>" +
-      '<td class="align-middle text-nowrap d-none d-md-table-cell">' +
+      '<td class="align-middle text-nowrap d-md-table-cell">' +
       department.location_name +
       "</td>" +
       '<td class="text-end text-nowrap">' +
@@ -252,27 +223,29 @@ function populateDepartmentTable(data) {
   });
 }
 
-
 // ----------- POPULATE PERSONNEL TABLE -----------
 function populatePersonnelTable(data) {
+  
+  var personnelTableBody;
+  
   personnelTableBody = $("#personnelTableBody");
   personnelTableBody.html('');
 
   data.forEach(function (person) {
     var row =
       "<tr>" +
-      '<td class="align-middle text-nowrap">' +
+      '<td class="align-middle text-nowrap fw-semibold">' +
       person.lastName +
       ", " +
       person.firstName +
       "</td>" +
-      '<td class="align-middle text-nowrap d-none d-md-table-cell">' +
+      '<td class="align-middle text-nowrap d-md-table-cell">' +
       person.jobTitle +
       "</td>" +
-      '<td class="align-middle text-nowrap d-none d-md-table-cell">' +
+      '<td class="align-middle text-nowrap d-md-table-cell">' +
       person.department +
       "</td>" +
-      '<td class="align-middle text-nowrap d-none d-md-table-cell">' +
+      '<td class="align-middle text-nowrap  d-md-table-cell">' +
       person.location +
       "</td>" +
       '<td class="text-end text-nowrap">' +
@@ -292,145 +265,62 @@ function populatePersonnelTable(data) {
   });
 }
 
-function addPagination(totalPages) {
-  var paginationContainer = $("#pagination");
-  paginationContainer.html("");
-
-  for (var i = 1; i <= totalPages; i++) {
-    var pageLink =
-      '<li class="page-item"><a class="page-link" href="#" data-page="' +
-      i +
-      '">' +
-      i +
-      "</a></li>";
-    paginationContainer.append(pageLink);
-  }
-
-  paginationContainer.find("a").on("click", function (e) {
-    e.preventDefault();
-    var page = $(this).data("page");
-    showPage(page, pageSize);
-  });
-}
-
-
-// -------------- SHOW PAGE PERSONNEL ------------------------------
-function showPage(page, pageSize) {
-  var start = (page - 1) * pageSize;
-  var end = start + pageSize;
-  $("#personnelTableBody tr").hide();
-
-  allPersonnel.slice(start, end).forEach(function (person) {
-    var row =
-      "<tr>" +
-      '<td class="align-middle text-nowrap">' +
-      person.lastName +
-      ", " +
-      person.firstName +
-      "</td>" +
-      '<td class="align-middle text-nowrap d-none d-md-table-cell">' +
-      person.department +
-      "</td>" +
-      '<td class="align-middle text-nowrap d-none d-md-table-cell">' +
-      person.location +
-      "</td>" +
-      '<td class="text-end text-nowrap">' +
-      '<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="' +
-      person.id +
-      '"><i class="fa-solid fa-pencil fa-fw"></i></button>' +
-      '<button type="button" class="btn btn-primary btn-sm deletePersonnelBtn" data-id="' +
-      person.id +
-      '"><i class="fa-solid fa-trash fa-fw"></i></button>' +
-      "</td>" +
-      "</tr>";
-
-    $("#personnelTableBody").append(row);
-  });
-}
-
-
-// ------------- SEARCH 
+// ------------- SEARCH  ----------------------
 $("#searchInp").on("keyup", function () {
   var activeTabId = $(".nav-tabs .nav-link.active").attr("id");
+  var searchTerm = $(this).val().toLowerCase();
 
-  var activeGlobalVariable;
+  var filteredData;
   switch (activeTabId) {
     case "personnelBtn":
-      activeGlobalVariable = allPersonnel;
+      // Use existing data for filtering
+      filteredData = allPersonnel.filter(function (item) {
+        return item.firstName.toLowerCase().includes(searchTerm) ||
+              item.lastName.toLowerCase().includes(searchTerm) ||
+              item.jobTitle.toLowerCase().includes(searchTerm) ||
+              item.email.toLowerCase().includes(searchTerm);
+      });
+      populatePersonnelTable(filteredData);
       break;
     case "departmentsBtn":
-      activeGlobalVariable = allDepartments;
+      // Use existing data for filtering
+      filteredData = allDepartments.filter(function (item) {
+        return item.name.toLowerCase().includes(searchTerm);
+      });
+      populateDepartmentTable(filteredData);
       break;
     case "locationsBtn":
-      activeGlobalVariable = allLocations;
+      // Use existing data for filtering
+      filteredData = allLocations.filter(function (item) {
+        return item.name.toLowerCase().includes(searchTerm);
+      });
+      populateLocationTable(filteredData);
       break;
-
     default:
       break;
-  }
-
-
-  var searchTerm = $(this).val().toLowerCase();
-  var filteredData = activeGlobalVariable.filter(function (item) {
-    if (activeTabId === "departmentsBtn") {
-      return item.name.toLowerCase().includes(searchTerm);
-    }
-
-    if (activeTabId === "locationsBtn") {
-      return item.name.toLowerCase().includes(searchTerm);
-    }
-    if (activeTabId === "personnelBtn") {
-      return (
-        item.firstName.toLowerCase().includes(searchTerm) ||
-        item.lastName.toLowerCase().includes(searchTerm) ||
-        item.jobTitle.toLowerCase().includes(searchTerm) ||
-        item.email.toLowerCase().includes(searchTerm)
-      );
-    }
-  });
-
-  if (activeTabId === "departmentsBtn") {
-    populateDepartmentTable(filteredData);
-  } else if (activeTabId === "locationsBtn") {
-    populateLocationTable(filteredData);
-  } else {
-    populatePersonnelTable(filteredData);
   }
 });
 
 
 //---------------- REFRESH SETTINGS ----------------
 $("#refreshBtn").click(function () {
-  if ($("#personnelBtn").hasClass("active")) {
     initialiseData();
-    $("#departmentFilter").prop('disabled', 'false');
-    $("#locationFilter").prop('disabled', 'false');
-    $("#searchInp").val("");
-  } else {
-    if ($("#departmentsBtn").hasClass("active")) {
-      initialiseData();
-      $("#departmentFilter").prop('disabled', 'true');
-      $("#locationFilter").prop('disabled', 'true');
-      $("#searchInp").val("");
-    } else {
-      initialiseData();
-      $("#departmentFilter").prop('disabled', 'true');
-      $("#locationFilter").prop('disabled', 'true');
-      $("#searchInp").val("");
-    }
-  }
+    $("#searchInp").val("");  
 });
 
-
 $("#departmentFilter, #locationFilter").change(function () {
-
   var selectedDepartment = $("#departmentFilter").val();
   var selectedLocation = $("#locationFilter").val();
 
-  var filteredData = filterPersonnelData(selectedDepartment, selectedLocation);
+  // Filter personnel data based on the selected department and location
+  var filteredData = allPersonnel.filter(function (person) {
+    var matchesDepartment = selectedDepartment === "" || person.departmentID == selectedDepartment;
+    var matchesLocation = selectedLocation === "" || person.locationID == selectedLocation;
+
+    return matchesDepartment && matchesLocation;
+  });
 
   populatePersonnelTable(filteredData);
-
 });
 
 function filterPersonnelData(selectedDepartment, selectedLocation) {
@@ -452,6 +342,32 @@ function sanitizeInput(input) {
   return sanitized;
 }
 
+// ----------------------------- VALIDATION FUNCTIONS ------------------------
+
+// Display Validation Error Message
+function displayValidationErrorMessage(inputId, errorMessage) {
+  $('#' + inputId).closest('.form-group').addClass('has-error');
+  $(`#${inputId}-error`).text(errorMessage);
+}
+// Clear Validation Error Message
+function clearValidationErrorMessage(inputId) {
+  $('#' + inputId).closest('.form-group').removeClass('has-error');
+  $(`#${inputId}-error`).text('');
+}
+
+// Validate Input Fields
+function validateFields(fields) {
+  for (const field of fields) {
+      const value = $(`#${field.id}`).val();
+      if (!sanitizeInput(value)) {
+          displayValidationErrorMessage(field.id, `${field.name} is required.`);
+          return false;
+      } else {
+          clearValidationErrorMessage(field.id);
+      }
+  }
+  return true;
+}
 
 //  ---------------------------------- ADD PERSONNEL MODAL --------------------------------
 
@@ -463,31 +379,30 @@ $("#addBtn").click(function () {
 
 $("#addPersonnelForm").submit(function (e) {
   e.preventDefault();
-
+  
   var firstname = sanitizeInput($("#addPersonnelFirstName").val());
   var lastname = sanitizeInput($("#addPersonnelLastName").val());
   var jobTitle = sanitizeInput($("#addPersonnelJobTitle").val());
   var email = $("#addPersonnelEmailAddress").val();
   var departmentID = $("#addPersonnelDepartment").val();
 
-      // Email validation
-      var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-      if (!emailRegex.test(email)) {
-          alert("Please enter a valid email address.");
-          return;
-      }
+  const firstnameInput = { id: 'addPersonnelFirstName', name: 'First name' };
+  const lastnameInput = { id: 'addPersonnelLastName', name: 'Last name' };
+  const jobTitleInput = { id: 'addPersonnelJobTitle', name: 'Job title' };
+  const departmentInput = { id: 'addPersonnelDepartment', name: 'Department' };
+
+  // Check all fields are entered
+  if (!validateFields([firstnameInput, lastnameInput, jobTitleInput, departmentInput])) 
+    return;
   
-      // Check all fields are entered
-      if (!firstname || !lastname || !jobTitle || !email) {
-          alert("Please fill out all fields.");
-          return;
-      }
-  
-      // Department selection validation
-      if (!departmentID) {
-          alert("Please select a department.");
-          return;
-      }
+  // Email validation
+  var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  if (!emailRegex.test(email)) {
+    displayValidationErrorMessage('addPersonnelEmailAddress', 'Email is not valid');
+    return;
+  } else {
+    clearValidationErrorMessage('addPersonnelEmailAddress');
+  }
 
   const apiUrl = "./libs/php/insertPersonnel.php";
   $.ajax({
@@ -501,15 +416,23 @@ $("#addPersonnelForm").submit(function (e) {
       jobTitle: jobTitle,
       departmentID: departmentID,
     },
-    success: function (data) {
-      $("#addPersonnelModal").modal("hide");
-      $("#addPersonnelForm")[0].reset(); // Clear the form fields
+    success: function (result) {
 
-      initialiseData();
+      var resultCode = result.status.code;
 
-      if (data.status && data.status.code !== "200") {
-        alert(data.data); // or update the DOM to display the message
-    } 
+      if (resultCode == 200) {
+        
+        $("#addPersonnelModal").modal("hide");
+        $("#addPersonnelForm")[0].reset(); // Clear the form fields
+        initialiseData(); // Refresh the location data on the page
+      }
+      if (resultCode == 401) { 
+        $("#addPersonnelModal").modal("hide");
+        $("#addPersonnelForm")[0].reset(); // Clear the form fields
+        $("#errorModal .modal-title").html('Insert failed');
+        $("#errorModal .modal-body").html(result.data);
+        $("#errorModal").modal('show');
+      }
 
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -520,7 +443,15 @@ $("#addPersonnelForm").submit(function (e) {
   });
 });
 
+function validateData(data, placeholder) {
+  if (data && data.trim().length > 0) {
+    // If data is not null, undefined, and not just whitespace
+    return data;
+  }
+  return placeholder; // Return placeholder if data is invalid
+}
 
+// ----------------- VIEW PERSONNEL MODAL ---------------------
 $("#viewPersonnelModal").on("show.bs.modal", function (e) {
   $.ajax({
     url: "./libs/php/getPersonnelByID.php",
@@ -533,34 +464,37 @@ $("#viewPersonnelModal").on("show.bs.modal", function (e) {
       var resultCode = result.status.code;
 
       if (resultCode == 200) {
-        console.log(result.data);
-
         var person = result.data.personnel[0];
-
         
-        $("#viewPersonnelModal .modal-body").html("");
-        $("#viewPersonnelModal .modal-title").html(person.firstName + " " + person.lastName);
-        var personnel =
-          "<table>" +
+      var defaultPlaceholder = '<span class="text-muted fst-italic">Not Available</span>';
+
+      // Validate each field
+      var jobTitle = validateData(person.jobTitle, defaultPlaceholder);
+      var department = validateData(person.department, defaultPlaceholder);
+      var location = validateData(person.location, defaultPlaceholder);
+
+      $("#viewPersonnelModal .modal-body").html("");
+      $("#viewPersonnelModal .modal-title").html(person.firstName + " " + person.lastName);
+
+      var personnel =
+        "<table>" +
         "</tr>" +
-        '<tr><td class="align-middle text-nowrap d-none d-md-table-cell"><strong>Job Title</strong>: ' +
-        person.jobTitle +
+        '<tr><td class="align-middle text-nowrap d-md-table-cell"><strong>Job Title</strong>: ' +
+        jobTitle +
         "</td></tr>" +
-        '<tr><td class="align-middle text-nowrap d-none d-md-table-cell"><strong>Department</strong>: ' +
-        person.department +
+        '<tr><td class="align-middle text-nowrap d-md-table-cell"><strong>Department</strong>: ' +
+        department +
         "</td></tr>" +
-        '<tr><td class="align-middle text-nowrap d-none d-md-table-cell"><strong>Location</strong>: ' +
-        person.location +
+        '<tr><td class="align-middle text-nowrap d-md-table-cell"><strong>Location</strong>: ' +
+        location +
         "</td></tr>" +
-        '<tr><td class="align-middle text-nowrap d-none d-md-table-cell"><strong>Email</strong>: ' +
-        person.email +
+        '<tr><td class="align-middle text-nowrap d-md-table-cell"><strong>Email</strong>: ' +
+        person.email  +
         "</td>" +
-          "</tr>" +
+        "</tr>" +
         "</table>";
   
         $("#viewPersonnelModal .modal-body").append(personnel);
-        
-
       } else {
         $("#viewPersonnelModal .modal-title").replaceWith(
           "Error retrieving data"
@@ -603,12 +537,12 @@ $("#addLocationForm").submit(function (e) {
 
   var name = sanitizeInput($("#addLocationName").val());
 
-      // Check if location name is entered
-      if (!addLocationName) {
-        alert("Please enter a location name.");
-        return;
-    }
+  const locationInput = { id: 'addLocationName', name: 'Location' };
 
+  // Check all fields are entered
+  if (!validateFields([ locationInput])) 
+    return;
+  
   const apiUrl = "./libs/php/insertLocation.php";
   $.ajax({
     url: apiUrl,
@@ -633,7 +567,6 @@ $("#addLocationForm").submit(function (e) {
         $("#errorModal .modal-body").html(result.data);
         $("#errorModal").modal('show');
       }
-
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(
@@ -642,7 +575,6 @@ $("#addLocationForm").submit(function (e) {
     },
   });
 });
-
 
 // ------------------------------------ ADD DEPARTMENT MODAL --------------------------------
 $("#addBtn").click(function () {
@@ -657,18 +589,13 @@ $("#addDepartmentForm").submit(function (e) {
   var departmentName = sanitizeInput($("#addDepartmentName").val());
   var locationID = $("#addLocationID").val();
 
-  // Check if department name is entered
-  if (!departmentName) {
-    alert("Please enter a department name.");
+  const locationInput = { id: 'addLocationID', name: 'Location' };
+  const departmentInput = { id: 'addDepartmentName', name: 'Department' };
+
+  // Check all fields are entered
+  if (!validateFields([ departmentInput, locationInput])) 
     return;
-  }
-
-  // Check if location ID is selected
-  if (!locationID) {
-      alert("Please select a location.");
-      return;
-  }
-
+  
   const apiUrl = "./libs/php/insertDepartment.php";
   $.ajax({
     url: apiUrl,
@@ -711,6 +638,7 @@ function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+
 // -------------------------------- DELETE MODALS --------------------------------
 // ------- PERSONNEL
 
@@ -739,8 +667,8 @@ $(document).on('click', '.deleteDepartmentBtn', function() {
 
 // ONE DELETE MODAL FOR ALL
 $('#confirmDeleteBtn').click(function() {
-  var id = $(this).data('id'); // The ID of what we are deleting
-  var source = $(this).data('source'); // This is what we are deleting e.g. personnel, department, location
+  var id = $(this).data('id'); // the ID of what we are deleting
+  var source = $(this).data('source'); // This is what we are deleting - personnel, department, location
   var url = './libs/php/delete' + capitalizeFirstLetter(source) + 'ByID.php'; // PHP files are consistently named.
 
   // delete the entry
@@ -761,7 +689,6 @@ $('#confirmDeleteBtn').click(function() {
         $("#errorModal .modal-body").html(result.data);
         $("#errorModal").modal('show');
       }
-
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(
@@ -770,7 +697,6 @@ $('#confirmDeleteBtn').click(function() {
     }
   });
 });
-
 
 // -------------------------------- EDIT MODALS --------------------------------
 // ---------------------- PERSONNEL METHOD
@@ -834,22 +760,22 @@ $("#editPersonnelForm").on("submit", function (e) {
 
   var departmentID = $("#editPersonnelDepartment").val();
 
-  var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-  if (!emailRegex.test(email)) {
-      alert("Please enter a valid email address.");
-      return;
-  }
+  const firstnameInput = { id: 'editPersonnelFirstName', name: 'First name' };
+  const lastnameInput = { id: 'editPersonnelLastName', name: 'Last name' };
+  const jobTitleInput = { id: 'editPersonnelJobTitle', name: 'Job title' };
+  const departmentInput = { id: 'editPersonnelDepartment', name: 'Department' };
 
   // Check all fields are entered
-  if (!firstname || !lastname || !jobTitle || !email) {
-      alert("Please fill out all fields.");
-      return;
-  }
-
-  // Department selection validation
-  if (!departmentID) {
-      alert("Please select a department.");
-      return;
+  if (!validateFields([firstnameInput, lastnameInput, jobTitleInput, departmentInput])) 
+    return;
+  
+  // Email validation
+  var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  if (!emailRegex.test(email)) {
+    displayValidationErrorMessage('editPersonnelEmailAddress', 'Email is not valid');
+    return;
+  } else {
+    clearValidationErrorMessage('editPersonnelEmailAddress');
   }
 
   const apiUrl = `./libs/php/updatePersonnelByID.php`;
@@ -894,8 +820,6 @@ $("#editLocationModal").on("show.bs.modal", function (e) {
       if (resultCode == 200) {
         $("#editLocationID").val(result.data.location[0].id);
         $("#editLocation").val(result.data.location[0].name);
-        
-
       } else {
         $("#editLocationModal.modal-title").replaceWith(
           "Error retrieving data"
@@ -917,6 +841,12 @@ $("#editLocationForm").on("submit", function (e) {
 
   var name = sanitizeInput($("#editLocation").val());
 
+  const locationInput = { id: 'editLocation', name: 'Location' };
+
+  // Check all fields are entered
+  if (!validateFields([locationInput])) 
+    return;
+  
   const apiUrl = `./libs/php/updateLocationByID.php`;
   $.ajax({
     url: apiUrl,
@@ -942,7 +872,6 @@ $("#editLocationForm").on("submit", function (e) {
 
 // ----------------- DEPARTMENT METHOD
 $("#editDepartmentModal").on("show.bs.modal", function (e) {
-  // var departmentId = $(e.relatedTarget).attr("data-id");
 
   // First, ensure allLocations is populated
   if (!allLocations || allLocations.length === 0) {
@@ -975,7 +904,6 @@ $("#editDepartmentModal").on("show.bs.modal", function (e) {
       if (resultCode == 200 && result.data && result.data.length > 0) {
         $("#editDepartmentID").val(result.data[0].id);
         $("#editDepartmentName").val(result.data[0].name);
-        
         // Set the selected value for the location
       if (result.data.location && result.data.location.length > 0) {
           $("#editDepartmentLocation").val(result.data.location[0].locationID);
@@ -993,7 +921,6 @@ $("#editDepartmentModal").on("show.bs.modal", function (e) {
       },
     });
   });
-          
 
 $("#editDepartmentForm").on("submit", function (e) {
   e.preventDefault();
@@ -1001,7 +928,14 @@ $("#editDepartmentForm").on("submit", function (e) {
   var departmentId = $("#editDepartmentID").val();
   var name = sanitizeInput($("#editDepartmentName").val());
   var locationID = $("#editDepartmentLocation").val();
+  
+  const departmentInput = { id: 'editDepartmentName', name: 'Department' };
+  const locationInput = { id: 'editDepartmentLocation', name: 'Location' };
 
+  // Check all fields are entered
+  if (!validateFields([departmentInput, locationInput])) 
+    return;
+  
   const apiUrl = `./libs/php/updateDepartmentByID.php`;
   $.ajax({
     url: apiUrl,
@@ -1025,56 +959,88 @@ $("#editDepartmentForm").on("submit", function (e) {
   });
 });
 
-// $(document).ready(function() {
-//   // Function to disable filters
-//   function disableFiltersPersonnel() {
-//       $('#departmentFilter').prop('disabled', true);
-//       $('#locationFilter').prop('disabled', true);
-//   }
+  // ---------------------- DISABLE FILTERS --------------------
+  // Departments tab is clicked
+  $('#departmentsBtn').on('click', function() {
+    resetFiltersAndSearch();
+    $('#departmentFilter').prop('disabled', false);
+    $('#locationFilter').prop('disabled', true);
+    $('#searchInp').prop('disabled', true);
+    filterDepartmentData();    
+});
+
+// Locations tab is clicked
+$('#locationsBtn').on('click', function() {
+    resetFiltersAndSearch();
+    $('#departmentFilter').prop('disabled', true);
+    $('#locationFilter').prop('disabled', false);
+    $('#searchInp').prop('disabled', true);
+    filterLocationData();    
+});
+
+    // Personnel tab is clicked
+    $('#personnelBtn').on('click', function() {
+      resetFiltersAndSearch();
+      $('#departmentFilter').prop('disabled', false);
+      $('#locationFilter').prop('disabled', false);
+      $('#searchInp').prop('disabled', false);
+  });
+
+  // ------ FILTERS TO WORK WHEN TAB IS CLICKED -----------------
+  $('#departmentFilter').change(function() {
+    if ($('#departmentsBtn').hasClass('active')) {
+        filterDepartmentData();
+    }
+});
+
+$('#locationFilter').change(function() {
+    if ($('#locationsBtn').hasClass('active')) {
+        filterLocationData();
+    }
+});
 
 
-//   // Function to enable filters
-//   function enableFilters() {
-//       $('#departmentFilter').prop('disabled', false);
-//       $('#locationFilter').prop('disabled', false);
-//   }
+// ------------- RESET FILTERS WHEN CLICKING NEW TAB ------
+function resetFiltersAndSearch() {
+  // Clear the search input
+  $('#searchInp').val('');
 
-//   // Disable filters initially
-//   disableFiltersPersonnel();
+  // Reset dropdowns
+  $('#departmentFilter').prop('selectedIndex', 0);
+  $('#locationFilter').prop('selectedIndex', 0);
+}
 
-//   // Trigger when the Personnel tab is shown
-//   $('#personnelBtn').on('shown.bs.tab', function() {
-//     disableFiltersPersonnel();
-//   });
+// --------------- FILTER DEPARTMENT AND LOCATION --------------------
+  function filterDepartmentData() {
+    var selectedDepartmentId = $('#departmentFilter').val();
+    var filteredDepartments;
 
-//   // Trigger when either the Departments or Locations tab is shown
-//   $('#departmentsBtn, #locationsBtn').on('shown.bs.tab', function() {
-//       enableFilters();
-//   });
+    if (selectedDepartmentId === "") {
+        // If no department is selected, display all departments
+        filteredDepartments = allDepartments;
+    } else {
+        // Filter the departments based on the selected ID
+        filteredDepartments = allDepartments.filter(function(department) {
+            return department.id == selectedDepartmentId;
+        });
+    }
 
+    populateDepartmentTable(filteredDepartments);
+}
 
+function filterLocationData() {
+  var selectedLocationId = $('#locationFilter').val();
+  var filteredLocations;
 
+  if (selectedLocationId === "") {
+      // If no location is selected, display all locations
+      filteredLocations = allLocations;
+  } else {
+      // Filter the locations based on the selected ID
+      filteredLocations = allLocations.filter(function(location) {
+          return location.id == selectedLocationId;
+      });
+  }
 
-//   $('#departmentsBtn').on('click', function() {
-//     $('#searchInp').prop('disabled', true);
-//     $('#locationFilter').prop('disabled', true);
-// });
-
-// // When the Departments or Locations tab is clicked
-// $('#searchInp, #locationsBtn').on('click', function() {
-//     $('#searchInp').prop('disabled', false);
-//     $('#locationFilter').prop('disabled', false);
-// });
-
-
-// $('#locationsBtn').on('click', function() {
-//   $('#searchInp').prop('disabled', true);
-//   $('#departmentFilter').prop('disabled', true);
-// });
-
-// // When the Departments or Locations tab is clicked
-// $('#departmentFilter, #searchInp').on('click', function() {
-//   $('#searchInp').prop('disabled', false);
-//   $('#departmentFilter').prop('disabled', false);
-// });
-// });
+  populateLocationTable(filteredLocations);
+}

@@ -1,8 +1,8 @@
 <?php
 
 	//REMOVE FOR PRODUCTION
-	ini_set('display_errors', 1);
-	error_reporting(E_ALL);
+	// ini_set('display_errors', 1);
+	// error_reporting(E_ALL);
 
 	$executionStartTime = microtime(true);
 
@@ -11,6 +11,7 @@
 	header('Content-Type: application/json; charset=UTF-8');
 
 	$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
+
 
 	// Check for connection error
 	if ($conn->connect_errno) {
@@ -92,4 +93,3 @@
 
 	mysqli_close($conn);
 	echo json_encode($output);
-?>

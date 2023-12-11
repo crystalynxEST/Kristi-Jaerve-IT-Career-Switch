@@ -1,8 +1,8 @@
 <?php
 
 	//REMOVE FOR PRODUCTION
-	ini_set('display_errors', 1);
-	error_reporting(E_ALL);
+	// ini_set('display_errors', 1);
+	// error_reporting(E_ALL);
 
 	$executionStartTime = microtime(true);
 
@@ -27,7 +27,6 @@
 	$name = htmlspecialchars(trim($_POST['name']));
 	$locationID = trim($_POST['locationID']);
     $id = $_POST['id'];
-
 
 	// Validate input
     if (empty($name) || empty($locationID) || empty($id)) {
@@ -90,4 +89,3 @@
 
 	mysqli_close($conn);
 	echo json_encode($output);
-?>

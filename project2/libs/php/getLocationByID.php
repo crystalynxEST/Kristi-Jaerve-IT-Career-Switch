@@ -4,8 +4,8 @@
     // http://localhost/companydirectory/libs/php/getPersonnelByID.php?id=<id>
 
     // Remove next two lines for production
-    ini_set('display_errors', 'On');
-    error_reporting(E_ALL);
+    // ini_set('display_errors', 'On');
+    // error_reporting(E_ALL);
 
     $executionStartTime = microtime(true);
 
@@ -30,7 +30,7 @@
         exit;
     }   
 
-    // Prepare and run the query to fetch specific location by ID
+    // Prepare and execute the query to fetch specific location by ID
     $query = $conn->prepare('SELECT `id`, `name` FROM `location` WHERE `id` = ?');
 
     // Validate or sanitize the input before using it in the query

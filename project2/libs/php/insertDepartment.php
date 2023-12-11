@@ -5,8 +5,8 @@
 
 	// remove next two lines for production
 	
-	ini_set('display_errors', 'On');
-	error_reporting(E_ALL);
+	// ini_set('display_errors', 'On');
+	// error_reporting(E_ALL);
 
 	$executionStartTime = microtime(true);
 	
@@ -32,7 +32,6 @@
 
 		exit;
 	}	
-
 	
 	$name = htmlspecialchars(trim($_POST['departmentName']));
 	$locationID = $_POST['locationID'];
@@ -51,15 +50,14 @@
 		exit;
 	}
 
-	// Query to check if departments exists with this location
+	// Query to check if departments exists in this location
 	$checkQuery = $conn->prepare('SELECT COUNT(*) FROM `department` WHERE `name` = ? and `locationID` = ?');
 	$checkQuery->bind_param("si", $name, $locationID);
 	$checkQuery->execute();
-
-	$result = $checkQuery->bind_result($count);
-
+	$checkQuery->bind_result($count);
 	$checkQuery->fetch();
-		
+	$checkQuery->free_result();
+
 	if (false === $checkQuery) {
 
 		$output['status']['code'] = "400";
@@ -87,7 +85,6 @@
 		echo json_encode($output); 
 
 		exit();
-
 	} else {
 
 	$query = $conn->prepare('INSERT INTO department (name, locationID) values (?,?)');
@@ -103,7 +100,6 @@
 		$output['data']['id'] = $last_id; // Add the last inserted ID to the output
 	
 		echo json_encode($output);
-	
 	} else {
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
@@ -117,5 +113,4 @@
 		exit;
 	}
 }
-?>
 
