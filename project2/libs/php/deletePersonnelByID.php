@@ -30,11 +30,7 @@
 		echo json_encode($output);
 
 		exit;
-
 	}	
-
-	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
 	$query = $conn->prepare('DELETE FROM personnel WHERE id = ?');
 	
@@ -42,7 +38,6 @@
 
 	$query->execute();
 	
-
 	if (false === $query) {
 
 		$output['status']['code'] = "400";
@@ -55,7 +50,6 @@
 		echo json_encode($output); 
 
 		exit;
-
 	}
 
 	$output['status']['code'] = "200";
@@ -67,5 +61,4 @@
 	mysqli_close($conn);
 
 	echo json_encode($output); 
-
 ?>

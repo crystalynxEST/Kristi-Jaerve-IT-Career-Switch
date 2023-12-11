@@ -29,7 +29,6 @@
 		echo json_encode($output);
 
 		exit;
-
 	}	
 
 	// SQL does not accept parameters and so is not prepared
@@ -50,15 +49,13 @@
 		echo json_encode($output); 
 
 		exit;
-
 	}
-   
-   	$data = [];
+
+	$data = [];
 
 	while ($row = mysqli_fetch_assoc($result)) {
 
 		array_push($data, $row);
-
 	}
 
 	$output['status']['code'] = "200";
@@ -70,5 +67,4 @@
 	mysqli_close($conn);
 
 	echo json_encode($output); 
-
 ?>

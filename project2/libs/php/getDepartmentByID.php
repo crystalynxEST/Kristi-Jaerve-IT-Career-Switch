@@ -29,15 +29,11 @@
 		echo json_encode($output);
 		
 		exit;
-
 	}	
-
-	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
 	$query = $conn->prepare('SELECT id, name, locationID FROM department WHERE id =  ?');
 
-	$query->bind_param("i", $_REQUEST['id']);
+	$query->bind_param("i", $_POST['id']);
 
 	$query->execute();
 	
@@ -52,17 +48,15 @@
 	
 		mysqli_close($conn);
 		exit;
-
 	}
 
 	$result = $query->get_result();
 
-   	$data = [];
+	$data = [];
 
 	while ($row = mysqli_fetch_assoc($result)) {
 
 		array_push($data, $row);
-
 	}
 
 	$output['status']['code'] = "200";
@@ -74,5 +68,4 @@
 	echo json_encode($output); 
 
 	mysqli_close($conn);
-
 ?>

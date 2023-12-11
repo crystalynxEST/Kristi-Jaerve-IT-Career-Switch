@@ -30,19 +30,18 @@
 		echo json_encode($output);
 
 		exit;
-
 	}	
-
-	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
-
-	$query = $conn->prepare('DELETE FROM department WHERE id = ?');
 	
-	$query->bind_param("i", $_REQUEST['id']);
+	// Query to check if departments exists with this location
+	$checkQuery = $conn->prepare('SELECT COUNT(*) FROM personnel WHERE departmentID = ?');
+	$checkQuery->bind_param("i", $_POST['id']);
+	$checkQuery->execute();
 
-	$query->execute();
+	$result = $checkQuery->bind_result($count);
 	
-	if (false === $query) {
+	$checkQuery->fetch();
+
+	if (false === $checkQuery) {
 
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
@@ -54,17 +53,54 @@
 		echo json_encode($output); 
 
 		exit;
-
 	}
 
-	$output['status']['code'] = "200";
-	$output['status']['name'] = "ok";
-	$output['status']['description'] = "success";
-	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-	$output['data'] = [];
-	
-	mysqli_close($conn);
 
-	echo json_encode($output); 
+	if ($count > 0) {
 
+		$output['status']['code'] = "401";
+		$output['status']['name'] = "unauthorised";
+		$output['status']['description'] = "success";
+		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+		$output['data'] = "There are {$count} personnel who are in this department.";
+		
+		mysqli_close($conn);
+
+		echo json_encode($output); 
+
+		exit();
+
+	} else {
+		// SQL statement accepts parameters and so is prepared to avoid SQL injection.
+
+		$query = $conn->prepare('DELETE FROM department WHERE id = ?');
+		
+		$query->bind_param("i", $_POST['id']);
+
+		$query->execute();
+		
+		if (false === $query) {
+
+			$output['status']['code'] = "400";
+			$output['status']['name'] = "executed";
+			$output['status']['description'] = "query failed";	
+			$output['data'] = [];
+
+			mysqli_close($conn);
+
+			echo json_encode($output); 
+
+			exit;
+		}
+
+		$output['status']['code'] = "200";
+		$output['status']['name'] = "ok";
+		$output['status']['description'] = "success";
+		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+		$output['data'] = [];
+		
+		mysqli_close($conn);
+
+		echo json_encode($output); 
+	}
 ?>

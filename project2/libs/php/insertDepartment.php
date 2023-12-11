@@ -31,19 +31,36 @@
 		echo json_encode($output);
 
 		exit;
-
 	}	
 
-	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
-
-	$query = $conn->prepare('INSERT INTO department (name, locationID) VALUES(?,?)');
-
-	$query->bind_param("si", $_REQUEST['name'], $_REQUEST['locationID']);
-
-	$query->execute();
 	
-	if (false === $query) {
+	$name = htmlspecialchars(trim($_POST['departmentName']));
+	$locationID = $_POST['locationID'];
+
+	// Validate input
+	if (!$name) {
+		$output['status']['code'] = "400";
+		$output['status']['name'] = "invalid input";
+		$output['status']['description'] = "Invalid Department name";  
+		$output['data'] = [];
+
+		mysqli_close($conn);
+
+		echo json_encode($output);
+
+		exit;
+	}
+
+	// Query to check if departments exists with this location
+	$checkQuery = $conn->prepare('SELECT COUNT(*) FROM `department` WHERE `name` = ? and `locationID` = ?');
+	$checkQuery->bind_param("si", $name, $locationID);
+	$checkQuery->execute();
+
+	$result = $checkQuery->bind_result($count);
+
+	$checkQuery->fetch();
+		
+	if (false === $checkQuery) {
 
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
@@ -55,17 +72,50 @@
 		echo json_encode($output); 
 
 		exit;
-
 	}
 
-	$output['status']['code'] = "200";
-	$output['status']['name'] = "ok";
-	$output['status']['description'] = "success";
-	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-	$output['data'] = [];
+	if ($count > 0) {
+
+		$output['status']['code'] = "401";
+		$output['status']['name'] = "unauthorised";
+		$output['status']['description'] = "success";
+		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+		$output['data'] = "This Department {$name} already exists for this location.";
+		
+		mysqli_close($conn);
+
+		echo json_encode($output); 
+
+		exit();
+
+	} else {
+
+	$query = $conn->prepare('INSERT INTO department (name, locationID) values (?,?)');
+	$query->bind_param('si', $name, $locationID);
 	
-	mysqli_close($conn);
+	if ($query->execute()) {
+		// Fetch the last inserted ID
+		$last_id = $conn->insert_id;
+		$output['status']['code'] = "200";
+		$output['status']['name'] = "ok";
+		$output['status']['description'] = "success";
+		$output['data'] = []; 
+		$output['data']['id'] = $last_id; // Add the last inserted ID to the output
+	
+		echo json_encode($output);
+	
+	} else {
+		$output['status']['code'] = "400";
+		$output['status']['name'] = "executed";
+		$output['status']['description'] = "query failed";	
+		$output['data'] = [];
 
-	echo json_encode($output); 
+		mysqli_close($conn);
 
+		echo json_encode($output); 
+
+		exit;
+	}
+}
 ?>
+

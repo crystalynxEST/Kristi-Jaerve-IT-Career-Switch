@@ -29,15 +29,11 @@
 		echo json_encode($output);
 
 		exit;
-
 	}	
 
-	// first query - SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
+	$query = $conn->prepare('SELECT `p`.`id`, `firstName`, `lastName`, `email`, `jobTitle`, `departmentID`, d.name as department, l.id as locationID, d.id as departmentID, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE `p`.`id` = ?');
 
-	$query = $conn->prepare('SELECT `id`, `firstName`, `lastName`, `email`, `jobTitle`, `departmentID` FROM `personnel` WHERE `id` = ?');
-
-	$query->bind_param("i", $_REQUEST['id']);
+	$query->bind_param("i", $_POST['id']);
 
 	$query->execute();
 	
@@ -53,17 +49,15 @@
 		echo json_encode($output); 
 
 		exit;
-
 	}
     
 	$result = $query->get_result();
 
-   	$personnel = [];
+	$personnel = [];
 
 	while ($row = mysqli_fetch_assoc($result)) {
 
 		array_push($personnel, $row);
-
 	}
 
 	// second query - does not accept parameters and so is not prepared
@@ -84,15 +78,13 @@
 		echo json_encode($output); 
 
 		exit;
-
 	}
-   
-   	$department = [];
+
+	$department = [];
 
 	while ($row = mysqli_fetch_assoc($result)) {
 
 		array_push($department, $row);
-
 	}
 
 	$output['status']['code'] = "200";
@@ -105,5 +97,4 @@
 	mysqli_close($conn);
 
 	echo json_encode($output); 
-
 ?>
