@@ -59,7 +59,7 @@
 		$output['status']['code'] = "401";
 		$output['status']['name'] = "unauthorised";
 		$output['status']['description'] = "success";
-		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) * 1000 . " ms";
 		$output['data'] = "This location has {$count} departments linked to it.";
 		
 		mysqli_close($conn);

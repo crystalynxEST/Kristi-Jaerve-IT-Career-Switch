@@ -90,7 +90,7 @@
 		$output['status']['code'] = "401";
 		$output['status']['name'] = "unauthorised";
 		$output['status']['description'] = "success";
-		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) * 1000 . " ms";
 		$output['data'] = "The person named: {$firstName} {$lastName} already exists in this database.";
 		
 		mysqli_close($conn);
@@ -125,7 +125,7 @@
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
-	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) * 1000 . " ms";
 	$output['data'] = [
 		'affectedRows' => $affectedRows,
 		'insertedId' => $insertedId
