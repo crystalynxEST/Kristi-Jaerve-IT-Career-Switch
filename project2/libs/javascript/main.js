@@ -313,7 +313,7 @@ $("#departmentFilter, #locationFilter").change(function () {
   var selectedLocation = $("#locationFilter").val();
 
   // Filter personnel data based on the selected department and location
-  var filteredData = allPersonnel.filter(function (person) {
+    var filteredData = allPersonnel.filter(function (person) {
     var matchesDepartment = selectedDepartment === "" || person.departmentID == selectedDepartment;
     var matchesLocation = selectedLocation === "" || person.locationID == selectedLocation;
 
@@ -365,7 +365,7 @@ function validateFields(fields) {
       } else {
           clearValidationErrorMessage(field.id);
       }
-  }
+    }
   return true;
 }
 
