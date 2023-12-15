@@ -1,9 +1,5 @@
 <?php
 
-	// example use from browser
-	// use insertDepartment.php first to create new dummy record and then specify it's id in the command below
-	// http://localhost/companydirectory/libs/php/deleteDepartmentByID.php?id=<id>
-
 	// remove next two lines for production
 	
 	// ini_set('display_errors', 'On');
@@ -32,15 +28,16 @@
 		exit;
 	}	
 	
-	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
+    $checkQuery = $conn->prepare('SELECT COUNT(department.id) as count, location.name as name FROM location LEFT JOIN department ON (department.locationID = location.id) where location.id = ?');
+    $checkQuery->bind_param("i", $_POST['id']);
+    $checkQuery->execute();
 
-	$query = $conn->prepare('DELETE FROM department WHERE id = ?');
+	$checkQuery->store_result(); // Store the result
+	$checkQuery->bind_result($count, $name);
+	$checkQuery->fetch();
 	
-	$query->bind_param("i", $_POST['id']);
 
-	$query->execute();
-	
-	if (false === $query) {
+	if (false === $checkQuery) {
 
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
@@ -54,14 +51,19 @@
 		exit;
 	}
 
-	$output['status']['code'] = "200";
-	$output['status']['name'] = "ok";
-	$output['status']['description'] = "success";
-	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) * 1000 . " ms";
-	$output['data'] = [];
-	
-	mysqli_close($conn);
+	$checkQuery->free_result(); // Free the result
+	$checkQuery->close(); // Close the statement for the "Commands out of sync" network response
 
-	echo json_encode($output); 
+
+    $output['status']['code'] = "200";
+    $output['status']['name'] = "ok";
+    $output['status']['description'] = "success";
+    $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) * 1000 . " ms";
+    $output['data']['count'] = $count;   
+    $output['data']['name'] = $name;
+    
+    mysqli_close($conn);
+
+    echo json_encode($output); 
 	
 ?>

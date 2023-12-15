@@ -62,7 +62,7 @@
 		}
 
 	// Query to check if personnel exists with this firstName and lastName
-	$checkQuery = $conn->prepare('SELECT COUNT(*) FROM `personnel` WHERE `firstName` = ? AND `lastName` = ?');
+	$checkQuery = $conn->prepare('SELECT COUNT(id) FROM `personnel` WHERE `firstName` = ? AND `lastName` = ?');
 	$checkQuery->bind_param("ss", $firstName, $lastName);
 	$checkQuery->execute();
 

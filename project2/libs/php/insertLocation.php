@@ -46,7 +46,7 @@
 	}
 	
 	// Query to check if departments exists with this location
-	$checkQuery = $conn->prepare('SELECT COUNT(*) FROM `location` WHERE name = ?');
+	$checkQuery = $conn->prepare('SELECT COUNT(id) FROM `location` WHERE name = ?');
 	$checkQuery->bind_param("s", $name);
 	$checkQuery->execute();
 	$checkQuery->bind_result($count);
