@@ -185,7 +185,7 @@ function populateLocationTable(data) {
       '<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id="' +
       location.id +
       '"><i class="fa-solid fa-pencil fa-fw"></i></button>' +
-      '<button type="button" class="btn btn-primary btn-sm deleteLocationBtn" data-id="' +
+      '<button type="button" class="btn btn-primary btn-sm ms-1 deleteLocationBtn" data-id="' +
       location.id +
       '"><i class="fa-solid fa-trash fa-fw"></i></button>' +
       "</td>" +
@@ -214,7 +214,7 @@ function populateDepartmentTable(data) {
       '<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id="' +
       department.id +
       '"><i class="fa-solid fa-pencil fa-fw"></i></button>' +
-      '<button type="button" class="btn btn-primary btn-sm deleteDepartmentBtn" data-id="' +
+      '<button type="button" class="btn btn-primary btn-sm ms-1 deleteDepartmentBtn" data-id="' +
       department.id +
       '"><i class="fa-solid fa-trash fa-fw"></i></button>' +
       "</td>" +
@@ -253,7 +253,7 @@ function populatePersonnelTable(data) {
       '<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="' +
       person.id +
       '"><i class="fa-solid fa-pencil fa-fw"></i></button>' +
-      '<button type="button" class="btn btn-primary btn-sm deletePersonnelBtn" data-id="' +
+      '<button type="button" class="btn btn-primary btn-sm ms-1 deletePersonnelBtn" data-id="' +
       person.id +
       '"><i class="fa-solid fa-trash fa-fw"></i></button>' +
       "</td>" +
