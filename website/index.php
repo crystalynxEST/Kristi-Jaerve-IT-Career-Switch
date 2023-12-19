@@ -80,13 +80,13 @@
                                 <!-- Flip Content -->
                                 <div class="flip-container1">
                                     <div id="flip">
-                                        <p class="words1">FULL STACK DEVELOPER</p>
+                                        <p class="words1">FULL-STACK DEVELOPER</p>
                                         
                                     </div>
                                 </div>
                             <!-- #intro Paragraph -->
                             <div class="intro-container1"> 
-                                <p id="intro">An Estonian in the UK, I'm a driven Full-Stack developer, who enjoys coding that transcends borders, always eager to learn and tackle complex challenges. </p>
+                                <p id="intro">An Estonian in the UK: I'm a driven Full-Stack developer, who enjoys coding that transcends borders, always eager to learn and tackle complex challenges. </p>
                             </div>
                                 <!-- Button -->
                                 <div class="button-container1" style="display:none;">
@@ -111,7 +111,7 @@
             <div class="col me" >
                 <h2>About Me</h2>
                 <p id="about-me para">
-                Launching my development journey with the IT Career Switch Traineeship, I've honed skills in Python, JavaScript, PHP, and HTML, CSS and have embraced and learning new technologies like Vue.js, Docker, AWS, and PHP Laravel. Outside of coding, my hobbies range from crochet and gaming to nature walks, historical exploration, and true crime mysteries. My relentless curiosity keeps me expanding my expertise in coding, graphic design, and artistic creativity</p>
+                Launching my development journey with the IT Career Switch Traineeship, I've honed skills in Python, JavaScript, PHP, and HTML, CSS and have embraced and learned new technologies like Vue.js, Docker, AWS, and PHP Laravel. Outside of coding, my hobbies range from crochet and gaming to nature walks, historical exploration, and true crime mysteries. My relentless curiosity keeps me expanding my expertise in coding, graphic design, and artistic creativity</p>
             </div>
         </div>
     </div>
@@ -359,19 +359,20 @@
         <div class="carousel-item__info ">
             <div class="carousel-item__container">
                 <h2 class="carousel-item__subtitle">IT Career Switch - Project 1  </h2>
-                <h1 class="carousel-item__title">Gazetteer</h1>
-                <p class="carousel-item__description">This web application features an interactive world map that seamlessly integrates location services. Users have the option to grant access to their location, triggering the highlighting of their current country on the map.  On the left panel, user-friendly EasyButtons provide quick access to various features, including checking demographics, Wikipedia details, top country news, weather information, and currency exchange rates. Additionally, marked locations are displayed directly on the map for easy reference.</p>
-                <h6 class="built-with-title">Technologies Used:</h6>
-                <p class="carousel-item__description"><strong> Frontend:</strong> HTML, CSS, JavaScript, Leaflet, Bootstrap, jQuery and Font Awesome.</p>
-                <p class="carousel-item__description"><strong> Backend:</strong> PHP, JSON, Ajax, Open Location Code with different external APIs.</p>
                 <div class="carousel-item__links">
                     <a href="https://github.com/crystalynxEST/Kristi-Jaerve-IT-Career-Switch/tree/main/project1" target="_blank" title="Link to GitHub">
-                        <i class="fa-brands fa-github fa-beat-fade fa-lg fa-fw"></i>
+                        <i class="fa-brands fa-github fa-beat-fade fa-lg fa-fw"></i><h4 class="cv">Github</h4>
                     </a>
                     <a href="https://kristijaerve.co.uk/project1/" target="_blank" title="Live application">
-                        <i class="fa-solid fa-pager fa-beat-fade fa-lg fa-fw"></i>
+                        <i class="fa-solid fa-pager fa-beat-fade fa-lg fa-fw"></i><h4 class="cv">Live App</h4>
                     </a>
                 </div>
+                <h1 class="carousel-item__title">Gazetteer</h1>
+                <p class="carousel-item__description">This web application features an interactive world map that seamlessly integrates location services. Users have the option to grant access to their location, triggering the highlighting of their current country on the map.  On the left panel, user-friendly EasyButtons provides quick access to various features, including checking demographics, Wikipedia details, top country news, weather information, and currency exchange rates. Additionally, marked locations are displayed directly on the map for easy reference.</p>
+                <h6 class="built-with-title">Technologies Used:</h6>
+                <p class="carousel-item__description"><strong> Front end:</strong> HTML, CSS, JavaScript, Leaflet, Bootstrap, jQuery and Font Awesome.</p>
+                <p class="carousel-item__description"><strong> Back end:</strong> PHP, JSON, Ajax, Open Location Code with different external APIs.</p>
+
             </div>
         </div>
 </div>
@@ -381,19 +382,20 @@
         <div class="carousel-item__info">
             <div class="carousel-item__container">
                 <h2 class="carousel-item__subtitle">IT Career Switch - Project 2 </h2>
-                <h1 class="carousel-item__title">Company Directory</h1>
-                <p class="carousel-item__description">This project focuses on reviving and completing a "Company Directory" system that was initiated 18 months ago but was left incomplete due to the departure of the original developer. The main goal is to resume development, ensuring that the system's functionality aligns with the approved design specifications. The existing codebase includes essential features like modal-triggering buttons, responsive design elements, modal show events, form handling, and extensive database interactions. The project's challenge lies in adding missing functionalities, maintaining a mobile-first responsive design, and implementing comprehensive database table maintenance features, while ensuring data integrity and accommodating the constraint of one location per department.</p>
-                <h6 class="built-with-title">Technologies Used:</h6>
-                <p class="carousel-item__description"><strong>Frontend:</strong> HTML, CSS, JavaScript, enhanced by Bootstrap for its responsive design. It also integrates Font Awesome for iconography and utilizes jQuery for additional interactivity and user experience improvements.</p>
-                <p class="carousel-item__description"><strong>Backend</strong>: PHP is used for server-side scripting, with JSON and Ajax facilitating efficient data exchange. The project leverages a MySQL database for robust data storage and retrieval, supporting multiple users and diverse data management functionalities.</p>
                 <div class="carousel-item__links">
                     <a href="https://github.com/crystalynxEST/Kristi-Jaerve-IT-Career-Switch/tree/main/project2" target="_blank" title="Link to GitHub">
-                        <i class="fa-brands fa-github fa-beat-fade fa-lg fa-fw"></i>
+                        <i class="fa-brands fa-github fa-beat-fade fa-lg fa-fw"></i><h4 class="cv">Github</h4>
                     </a>
                     <a href="https://kristijaerve.co.uk/project2/" target="_blank" title="Live application">
-                        <i class="fa-solid fa-pager fa-beat-fade fa-lg fa-fw"></i>
+                        <i class="fa-solid fa-pager fa-beat-fade fa-lg fa-fw"></i><h4 class="cv">Live App</h4>
                     </a>
                 </div>
+                <h1 class="carousel-item__title">Company Directory</h1>
+                <p class="carousel-item__description">This project focuses on reviving and completing a "Company Directory" system that was initiated 18 months ago but was left incomplete due to the departure of the original developer. The main goal is to resume development, ensuring that the system's functionality aligns with the approved design specifications. The existing codebase includes essential features like modal-triggering buttons, responsive design elements, modal show events, form handling, and extensive database interactions. The project's challenge lies in adding missing functionalities, maintaining a mobile-first responsive design, and implementing comprehensive database table maintenance features while ensuring data integrity and accommodating the constraint of one location per department.</p>
+                <h6 class="built-with-title">Technologies Used:</h6>
+                <p class="carousel-item__description"><strong>Front end:</strong> HTML, CSS, JavaScript, enhanced by Bootstrap for its responsive design. It also integrates Font Awesome for iconography and utilizes jQuery for additional interactivity and user experience improvements.</p>
+                <p class="carousel-item__description"><strong>Back end</strong>: PHP is used for server-side scripting, with JSON and Ajax facilitating efficient data exchange. The project leverages a MySQL database for robust data storage and retrieval, supporting multiple users and diverse data management functionalities.</p>
+
             </div>
         </div>
 </div>
@@ -403,17 +405,18 @@
             <div class="carousel-item__info">
                 <div class="carousel-item__container">
                     <h2 class="carousel-item__subtitle">Company Project </h2>
-                    <h1 class="carousel-item__title">Finance Calculator</h1>
-                    <p class="carousel-item__description">I was tasked by the company to develope a versatile finance calculator designed to seamlessly integrate into various company websites utilizing WYSIWYG coding, and as a standalone application. The primary objective was to provide users with tailored options to create calculations that accurately depict their monthly loan payments. This required accommodating variables such as vehicle price, loan amount, loan duration in months, and dynamic interest rates based on user selections, ensuring a comprehensive and user-friendly financial tool.</p>
-                    <p class="carousel-item__description"><strong>Frontend:</strong> HTML, CSS, JavaScript inside WYSIWYG.</p>
                     <div class="carousel-item__links">
     <!-- <a href="https://github.com/crystalynxEST/Kristi-Jaerve-IT-Career-Switch/tree/main/project1" target="_blank" title="Link to GitHub">
                     <i class="fa-brands fa-github fa-beat-fade  fa-lg fa-fw"></i>
                 </a> -->
                         <a href="https://vertuleasecars.co.uk/specialist-vehicles/plant-and-go-tool-hire-lease" target="_blank" title="Live application">
-                            <i class="fa-solid fa-pager fa-beat-fade fa-lg fa-fw"></i>
+                            <i class="fa-solid fa-pager fa-beat-fade fa-lg fa-fw"></i><h4 class="cv">Live App</h4>
                         </a>
                     </div>
+                    <h1 class="carousel-item__title">Finance Calculator</h1>
+                    <p class="carousel-item__description">I was tasked by the company to develop a versatile finance calculator designed to seamlessly integrate into various company websites utilizing WYSIWYG coding and as a standalone application. The primary objective was to provide users with tailored options to create calculations that accurately depict their monthly loan payments. This required accommodating variables such as vehicle price, loan amount, loan duration in months, and dynamic interest rates based on user selections, ensuring a comprehensive and user-friendly financial tool.</p>
+                    <p class="carousel-item__description"><strong>Front end:</strong> HTML, CSS, JavaScript inside WYSIWYG.</p>
+
                 </div>
             </div>
     </div>

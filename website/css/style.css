@@ -777,8 +777,14 @@ h6.built-with-title {
 
 .carousel-item__links{
     padding-bottom: 1rem;
+    display: flex;
+    justify-content: center;
 }
 
+.carousel-item__links a {
+    margin-right: 1rem;
+    text-align: center;
+}
 .carousel__nav {
     position: absolute;
     right: 06vw; 
