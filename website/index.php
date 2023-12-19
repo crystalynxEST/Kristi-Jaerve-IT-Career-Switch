@@ -440,9 +440,9 @@
                         <div class="form-group">
                             <input type="email" class="form-control" placeholder="Email Address" name="email" required autocomplete="off">
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <input type="text" class="form-control" placeholder="Telephone number" name="phone" autocomplete="off">
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <textarea class="form-control" name="message" placeholder="Write your message here..." rows="4" required></textarea>
                         </div>

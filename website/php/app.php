@@ -23,7 +23,7 @@ try {
     // Sanitize and validate inputs
     $name = htmlspecialchars(stripslashes(trim($_POST['name'])));
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $phone = htmlspecialchars(stripslashes(trim($_POST['phone'])));
+    // $phone = htmlspecialchars(stripslashes(trim($_POST['phone'])));
     $message = htmlspecialchars(stripslashes(trim($_POST['message'])));
 
     // Validate email address
@@ -34,7 +34,7 @@ try {
 
     // Load email template and replace placeholders
     $template = file_get_contents('../email_template.html');
-    $replacements = ['{{name}}' => $name, '{{email}}' => $email, '{{phone}}' => $phone, '{{message}}' => $message];
+    $replacements = ['{{name}}' => $name, '{{email}}' => $email, '{{message}}' => $message];
     foreach ($replacements as $placeholder => $value) {
         $template = str_replace($placeholder, $value, $template);
     }
