@@ -787,7 +787,7 @@ h6.built-with-title {
 }
 .carousel__nav {
     position: absolute;
-    right: 06vw; 
+    display:flex;
     z-index: 2;
     background-color: #fff;
     border-radius: 10%; 
@@ -1024,6 +1024,15 @@ h2#status-message {
         align-items: center;
         justify-content: center;
         
+    }
+
+    .carousel__nav {
+        top:48%;
+        left:1%;
+    }
+
+    .carousel__arrow {
+        padding: 0px 0px;
     }
 
     .carousel-item {
